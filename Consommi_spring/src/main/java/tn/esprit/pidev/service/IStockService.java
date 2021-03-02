@@ -1,9 +1,18 @@
 package tn.esprit.pidev.service;
 
+import java.util.List;
+
+import tn.esprit.pidev.entities.Stock;
+
 public interface IStockService {
 	
-	void AddStock(int prodID, float quan);
+	void AddQStock(int prodID, float quan);
 	
 	String CommandeStock(int prodID, float quan);
-
+	
+	void AddStock(Stock stock);
+	
+	Stock getStockByProduct(int prodID);
+	
+	List<Stock> getStockbyQuantity(int quan);
 }

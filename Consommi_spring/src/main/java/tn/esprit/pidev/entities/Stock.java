@@ -32,7 +32,7 @@ public class Stock implements Serializable{
 	@ManyToMany
 	private List<Product> products;
 	@ManyToMany(mappedBy = "stocks")
-	private List<Cart>carts;
+	private List<Command> Commandes;
 	public int getIdstock() {
 		return idstock;
 	}
@@ -63,12 +63,14 @@ public class Stock implements Serializable{
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	public List<Cart> getCarts() {
-		return carts;
+	public List<Command> getCommandes() {
+		return Commandes;
 	}
-	public void setCarts(List<Cart> carts) {
-		this.carts = carts;
+	public void setCommandes(List<Command> commandes) {
+		Commandes = commandes;
 	}
+	
+	
 	
 	
 
