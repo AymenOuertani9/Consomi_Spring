@@ -49,7 +49,8 @@ cmnt.mettreAjourCommentaireById(description, idcomment);
 public List<String> getAllCommentaireJPQL() {
 				
 return cmnt.getAllCommentaireJPQL();
-			}		
+			}	
+
 
 
 

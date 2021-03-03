@@ -58,4 +58,9 @@ public List<String> getAllCommentaireJPQL() {
 	return cmnt.Commentaire();	 
 }
 
+
+//@Override
+//public List<String> getAllUSERJPQL() {
+//	return us.user();	 
+//}
 }
