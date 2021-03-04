@@ -23,23 +23,123 @@ public class Claim implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idclaim;
-	private int reference;
 	private String description;
 	@Temporal(TemporalType.DATE)
-	private Date dateclaim;
-	@Temporal(TemporalType.DATE)
-	private Date Appointement;
-	private String Etat;
+	private Date dateClaim;
+	private String etat;
+	
 	@ManyToOne
 	private User user;
-	@OneToOne
-	private Refund refund;
-	@OneToOne
+	
+	@ManyToOne
+	private Product product;
+	
+	@OneToOne(mappedBy="claim")
 	private Repair repair;
-	@OneToOne
+	
+	@OneToOne(mappedBy="claim")
 	private Exchange exchange;
-	@OneToOne
-	private Bill bill;
+	
+	@OneToOne(mappedBy="claim")
+	private Refund refund;
+	
+	/*------------------------------------------------------------------------------------------------*/
+	public int getIdclaim() {
+		return idclaim;
+	}
+
+	public void setIdclaim(int idclaim) {
+		this.idclaim = idclaim;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getDateClaim() {
+		return dateClaim;
+	}
+
+	public void setDateClaim(Date dateClaim) {
+		this.dateClaim = dateClaim;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Repair getRepair() {
+		return repair;
+	}
+
+	public void setRepair(Repair repair) {
+		this.repair = repair;
+	}
+
+	public Exchange getExchange() {
+		return exchange;
+	}
+
+	public void setExchange(Exchange exchange) {
+		this.exchange = exchange;
+	}
+
+	public Refund getRefund() {
+		return refund;
+	}
+
+	public void setRefund(Refund refund) {
+		this.refund = refund;
+	}
+	/*------------------------------------------------------------------------------------------------*/
+	@Override
+	public String toString() {
+		return "Claim [idclaim=" + idclaim + ", description=" + description + ", dateClaim=" + dateClaim + ", etat="
+				+ etat + ", user=" + user + ", product=" + product + ", repair=" + repair + ", exchange=" + exchange
+				+ ", refund=" + refund + "]";
+	}
+	/*------------------------------------------------------------------------------------------------*/
+	public Claim() {
+		super();
+		// TODO Auto-generated constructor stub
+	}	
+	/*------------------------------------------------------------------------------------------------*/
+
+	public Claim(String description, Date dateClaim, User user, Product product) {
+		super();
+		this.description = description;
+		this.dateClaim = dateClaim;
+		this.user = user;
+		this.product = product;
+	}
+	
+
+	
+	
 	
 
 }

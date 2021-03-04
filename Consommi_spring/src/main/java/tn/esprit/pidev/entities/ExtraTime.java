@@ -19,11 +19,67 @@ import lombok.NoArgsConstructor;
 public class ExtraTime implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private int idextra;
-private Date dateextra;
-private int NbrHour;
-@ManyToOne
-private DeliveryMan deliveryman;
+	private int idExtraTime;
+	private Date datEextraTima;
+	private int nbrHour;
+	
+	@ManyToOne
+	private DeliveryMan deliveryMan;
 
+	/*------------------------------------------------------------------------------------------------*/
 
+	@Override
+	public String toString() {
+		return "ExtraTime [idExtraTime=" + idExtraTime + ", datEextraTima=" + datEextraTima + ", nbrHour=" + nbrHour
+				+ ", deliveryMan=" + deliveryMan + "]";
+	}
+	/*------------------------------------------------------------------------------------------------*/
+
+	public int getIdExtraTime() {
+		return idExtraTime;
+	}
+
+	public void setIdExtraTime(int idExtraTime) {
+		this.idExtraTime = idExtraTime;
+	}
+
+	public Date getDatEextraTima() {
+		return datEextraTima;
+	}
+
+	public void setDatEextraTima(Date datEextraTima) {
+		this.datEextraTima = datEextraTima;
+	}
+
+	public int getNbrHour() {
+		return nbrHour;
+	}
+
+	public void setNbrHour(int nbrHour) {
+		this.nbrHour = nbrHour;
+	}
+
+	public DeliveryMan getDeliveryMan() {
+		return deliveryMan;
+	}
+
+	public void setDeliveryMan(DeliveryMan deliveryMan) {
+		this.deliveryMan = deliveryMan;
+	}
+	/*------------------------------------------------------------------------------------------------*/
+
+	public ExtraTime() {
+		super();
+		
+	}
+	/*------------------------------------------------------------------------------------------------*/
+
+	public ExtraTime(Date datEextraTima, int nbrHour, DeliveryMan deliveryMan) {
+		super();
+		this.datEextraTima = datEextraTima;
+		this.nbrHour = nbrHour;
+		this.deliveryMan = deliveryMan;
+	}
+	
+	
 }
