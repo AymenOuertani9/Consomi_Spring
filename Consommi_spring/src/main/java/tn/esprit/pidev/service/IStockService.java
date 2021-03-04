@@ -14,5 +14,5 @@ public interface IStockService {
 	
 	Stock getStockByProduct(int prodID);
 	
-	List<Stock> getStockbyQuantity(int quan);
+	List<Stock> getStockbyQuantity(float quan);
 }

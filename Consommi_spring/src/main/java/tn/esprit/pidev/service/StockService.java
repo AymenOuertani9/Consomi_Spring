@@ -50,9 +50,9 @@ public class StockService implements IStockService {
 		return st;
 	}
 	@Override
-	public List<Stock> getStockbyQuantity(int quan) {
+	public List<Stock> getStockbyQuantity(float quan) {
 		// TODO Auto-generated method stub
-		return null;
+		return stock.findbyQuantity(quan);
 	}
 	
 		
