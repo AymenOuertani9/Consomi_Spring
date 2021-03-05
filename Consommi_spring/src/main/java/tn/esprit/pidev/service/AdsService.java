@@ -26,6 +26,8 @@ public class AdsService implements IAdsService {
 	public void ModAd(int AdsId, Ads ads) {
 		// TODO Auto-generated method stub
 		Ads ad=adsrepository.findById(AdsId).orElse(null);
+		ads = ad;
+		adsrepository.save(ads);
 	}
 
 	@Override
