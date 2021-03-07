@@ -2,44 +2,38 @@ package tn.esprit.pidev.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Stock implements Serializable{
+public class supplying implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idstock;
+	private int idSupp;
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
+	private String Product;
 	private float quantity;
-	@ManyToOne
-	private User user;
-	@ManyToMany
-	private List<Product> products;
-	@ManyToMany
-	private List<Command> commande;
-	
-	
-	public int getIdstock() {
-		return idstock;
+	private float tot_coast;
+	@Temporal(TemporalType.DATE)
+	private Date d_arrivale;
+	public int getIdSupp() {
+		return idSupp;
 	}
-	public void setIdstock(int idstock) {
-		this.idstock = idstock;
+	public void setIdSupp(int idSupp) {
+		this.idSupp = idSupp;
 	}
 	public Date getDateCreation() {
 		return DateCreation;
@@ -47,31 +41,30 @@ public class Stock implements Serializable{
 	public void setDateCreation(Date dateCreation) {
 		DateCreation = dateCreation;
 	}
+	public String getProduct() {
+		return Product;
+	}
+	public void setProduct(String product) {
+		Product = product;
+	}
 	public float getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(float quantity) {
-		quantity = quantity;
+		this.quantity = quantity;
 	}
-	public User getUser() {
-		return user;
+	public float getTot_coast() {
+		return tot_coast;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setTot_coast(float tot_coast) {
+		this.tot_coast = tot_coast;
 	}
-	public List<Product> getProducts() {
-		return products;
+	public Date getD_arrivale() {
+		return d_arrivale;
 	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setD_arrivale(Date d_arrivale) {
+		this.d_arrivale = d_arrivale;
 	}
-	public List<Command> getCommandes() {
-		return commande;
-	}
-	public void setCommandes(List<Command> commandes) {
-		commande = commandes;
-	}
-	
 	
 	
 	
