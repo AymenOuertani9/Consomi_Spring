@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.pidev.entities.AdsView;
 
 @Repository
-public interface IAdsView extends CrudRepository<AdsView,Integer> {
+public interface IAdsViewRepository extends CrudRepository<AdsView,Integer> {
 
 }
