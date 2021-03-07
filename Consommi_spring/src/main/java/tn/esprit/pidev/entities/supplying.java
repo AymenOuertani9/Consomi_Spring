@@ -29,15 +29,6 @@ public class supplying implements Serializable{
 	private float tot_coast;
 	@Temporal(TemporalType.DATE)
 	private Date d_arrivale;
-	public supplying(int idSupp, Date dateCreation, String product, float quantity, float tot_coast, Date d_arrivale) {
-		super();
-		this.idSupp = idSupp;
-		DateCreation = dateCreation;
-		Product = product;
-		this.quantity = quantity;
-		this.tot_coast = tot_coast;
-		this.d_arrivale = d_arrivale;
-	}
 	public int getIdSupp() {
 		return idSupp;
 	}

@@ -10,6 +10,6 @@ import tn.esprit.pidev.entities.supplier;
 @Repository
 public interface ISupplierRepository extends CrudRepository<supplier,Integer> {
 	
-	List<supplier> findbyProduct(String P_Name);
+	List<supplier> findByProduct(String P_Name);
 
 }

@@ -11,6 +11,6 @@ import tn.esprit.pidev.entities.Stock;
 @Repository
 public interface IProductRepository extends CrudRepository<Product,Integer> {
 	
-	List<Product> findbyproductName(String Name);
+	List<Product> findByproductName(String Name);
 	
 }

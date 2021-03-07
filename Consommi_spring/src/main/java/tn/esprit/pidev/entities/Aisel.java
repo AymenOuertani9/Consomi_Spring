@@ -23,16 +23,9 @@ public class Aisel implements Serializable{
 	private String name;
 	private String type;
 	private int Capacitymax;
-	@OneToMany(mappedBy = "Aisel")
-	private List<Product>products;
-	public Aisel(int idAisel, String name, String type, int capacitymax, List<Product> products) {
-		super();
-		this.idAisel = idAisel;
-		this.name = name;
-		this.type = type;
-		Capacitymax = capacitymax;
-		this.products = products;
-	}
+	@OneToMany(mappedBy = "aisel")
+	private List<Product> products;
+	
 	public int getIdAisel() {
 		return idAisel;
 	}

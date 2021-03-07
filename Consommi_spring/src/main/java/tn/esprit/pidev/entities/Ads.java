@@ -27,21 +27,11 @@ public class Ads implements Serializable {
 	private Date DateCreation;
 	private String MediaType;
 	private Byte Madia;
-	private Date StartDate;
-	private Date FinishDate;
+	@Temporal(TemporalType.DATE)
+	private Date startDate;
+	@Temporal(TemporalType.DATE)
+	private Date finishDate;
 	private String Target;
-	
-	public Ads(int idAds, Date dateCreation, String mediaType, Byte madia, Date startDate, Date finishDate,
-			String target) {
-		super();
-		this.idAds = idAds;
-		DateCreation = dateCreation;
-		MediaType = mediaType;
-		Madia = madia;
-		StartDate = startDate;
-		FinishDate = finishDate;
-		Target = target;
-	}
 	public int getIdAds() {
 		return idAds;
 	}
@@ -67,16 +57,16 @@ public class Ads implements Serializable {
 		Madia = madia;
 	}
 	public Date getStartDate() {
-		return StartDate;
+		return startDate;
 	}
 	public void setStartDate(Date startDate) {
-		StartDate = startDate;
+		startDate = startDate;
 	}
 	public Date getFinishDate() {
-		return FinishDate;
+		return finishDate;
 	}
 	public void setFinishDate(Date finishDate) {
-		FinishDate = finishDate;
+		finishDate = finishDate;
 	}
 	public String getTarget() {
 		return Target;

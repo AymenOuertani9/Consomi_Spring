@@ -25,16 +25,8 @@ public class supplier implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
 	private String Name;
-	private String Product;
+	private String product;
 	private float coast;
-	public supplier(int idSupplier, Date dateCreation, String name, String product, float coast) {
-		super();
-		this.idSupplier = idSupplier;
-		DateCreation = dateCreation;
-		Name = name;
-		Product = product;
-		this.coast = coast;
-	}
 	public int getIdSupplier() {
 		return idSupplier;
 	}
@@ -54,10 +46,10 @@ public class supplier implements Serializable{
 		Name = name;
 	}
 	public String getProduct() {
-		return Product;
+		return product;
 	}
 	public void setProduct(String product) {
-		Product = product;
+		product = product;
 	}
 	public float getCoast() {
 		return coast;

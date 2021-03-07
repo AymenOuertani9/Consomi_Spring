@@ -20,7 +20,8 @@ public class StockService implements IStockService {
 	@Override
 	public void AddQStock(int prodID, float quan) {
 		// TODO Auto-generated method stub
-		Stock st=stock.findbyidProduct(prodID);
+		Product prod= product.findById(prodID).orElse(null);
+		Stock st=stock.findByproducts(prod);
 		float qex = st.getQuantity();
 		st.setQuantity(quan + qex);
 		stock.save(st);
@@ -28,7 +29,8 @@ public class StockService implements IStockService {
 	@Override
 	public String CommandeStock(int prodID,float quan) {
 		// TODO Auto-generated method stub
-		Stock st=stock.findbyidProduct(prodID);
+		Product prod= product.findById(prodID).orElse(null);
+		Stock st=stock.findByproducts(prod);
 		float qex = st.getQuantity();
 		if(qex >= quan){
 			st.setQuantity(qex - quan);
@@ -46,13 +48,14 @@ public class StockService implements IStockService {
 	@Override
 	public Stock getStockByProduct(int prodID) {
 		// TODO Auto-generated method stub
-		Stock st=stock.findbyidProduct(prodID);
+		Product prod= product.findById(prodID).orElse(null);
+		Stock st=stock.findByproducts(prod);
 		return st;
 	}
 	@Override
 	public List<Stock> getStockbyQuantity(float quan) {
 		// TODO Auto-generated method stub
-		return stock.findbyQuantity(quan);
+		return stock.findByQuantity(quan);
 	}
 	
 		

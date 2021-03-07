@@ -28,25 +28,31 @@ public class SupplierService implements ISupplierService {
 	@Override
 	public List<supplier> getSupplierByProduct(String Product_Name) {
 		
-		return (List<supplier>) supplierrepository.findbyProduct(Product_Name);
+		return (List<supplier>) supplierrepository.findByProduct(Product_Name);
 	}
 
 	@Override
-	public String AddSupplier() {
+	public String AddSupplier(supplier supplier) {
 		// TODO Auto-generated method stub
-		return null;
+		supplierrepository.save(supplier);
+		return "Supplier Added";
 	}
 
 	@Override
 	public String Mod_Supplier(int SuppId, supplier supplier) {
 		// TODO Auto-generated method stub
-		return null;
+		supplier supp=supplierrepository.findById(SuppId).orElse(null);
+		supplier = supp;
+		supplierrepository.save(supplier);
+		return "Supplier Update";
 	}
 
 	@Override
 	public String Del_Supplier(int SuppID) {
 		// TODO Auto-generated method stub
-		return null;
+		supplier supp=supplierrepository.findById(SuppID).orElse(null);
+		supplierrepository.delete(supp);
+		return "Supplier Deleted";
 	}
 
 }

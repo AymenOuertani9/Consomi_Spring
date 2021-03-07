@@ -26,13 +26,15 @@ public class Stock implements Serializable{
 	private int idstock;
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
-	private float Quantity;
+	private float quantity;
 	@ManyToOne
 	private User user;
 	@ManyToMany
 	private List<Product> products;
-	@ManyToMany(mappedBy = "stocks")
-	private List<Command> Commandes;
+	@ManyToMany
+	private List<Command> commande;
+	
+	
 	public int getIdstock() {
 		return idstock;
 	}
@@ -46,10 +48,10 @@ public class Stock implements Serializable{
 		DateCreation = dateCreation;
 	}
 	public float getQuantity() {
-		return Quantity;
+		return quantity;
 	}
 	public void setQuantity(float quantity) {
-		Quantity = quantity;
+		quantity = quantity;
 	}
 	public User getUser() {
 		return user;
@@ -64,10 +66,10 @@ public class Stock implements Serializable{
 		this.products = products;
 	}
 	public List<Command> getCommandes() {
-		return Commandes;
+		return commande;
 	}
 	public void setCommandes(List<Command> commandes) {
-		Commandes = commandes;
+		commande = commandes;
 	}
 	
 	
