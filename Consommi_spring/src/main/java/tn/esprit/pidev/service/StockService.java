@@ -17,6 +17,8 @@ public class StockService implements IStockService {
 	IProductRepository product;
 	@Autowired
 	IStockRepository stock;
+	
+	
 	@Override
 	public void AddQStock(int prodID, float quan) {
 		// TODO Auto-generated method stub
