@@ -23,10 +23,23 @@ public class Exchange implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idexchange;
 	private String Type;
-	@Temporal(TemporalType.DATE)
-	private Date date;
-	@OneToOne(mappedBy = "exchange")
-	private Claim claim;
+	
+	
+	
+	public Exchange() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public Exchange(int idexchange, String type) {
+		super();
+		this.idexchange = idexchange;
+		Type = type;
+	}
+	
+	
 	
 
 }

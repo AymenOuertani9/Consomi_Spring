@@ -24,6 +24,17 @@ private Date dateextra;
 private int NbrHour;
 @ManyToOne
 private DeliveryMan deliveryman;
+public ExtraTime() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+public ExtraTime(int idextra, Date dateextra, int nbrHour, DeliveryMan deliveryman) {
+	super();
+	this.idextra = idextra;
+	this.dateextra = dateextra;
+	NbrHour = nbrHour;
+	this.deliveryman = deliveryman;
+}
 
 
 }

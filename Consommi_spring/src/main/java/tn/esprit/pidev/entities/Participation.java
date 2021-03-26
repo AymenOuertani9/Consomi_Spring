@@ -32,7 +32,7 @@ public class Participation implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idUser", referencedColumnName = "iduser", insertable = false, updatable = false)
 
-	private User user;
+	private UserConsomi user;
 
 	@ManyToOne
 	@JoinColumn(name = "idEvent", referencedColumnName = "idEvent", insertable = false, updatable = false)
@@ -42,7 +42,7 @@ public class Participation implements Serializable {
 		super();
 	}
 
-	public Participation(ParticipationPK participationPK, float price, String participationDate, User user,
+	public Participation(ParticipationPK participationPK, float price, String participationDate, UserConsomi user,
 			Event event) {
 		super();
 		this.participationPK = participationPK;
@@ -76,11 +76,11 @@ public class Participation implements Serializable {
 		this.participationDate = participationDate;
 	}
 
-	public User getUser() {
+	public UserConsomi getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserConsomi user) {
 		this.user = user;
 	}
 

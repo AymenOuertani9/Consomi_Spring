@@ -37,10 +37,10 @@ public class Product implements Serializable{
 	private int mostViewed;
 	private int tva;
 	private int weigth;
-	private int quantity;
+	
 
 	@ManyToOne
-	private User user;
+	private UserConsomi user;
 	@OneToMany(mappedBy = "product")
 	private List<Promotion>promotions;
 	@ManyToOne
@@ -48,7 +48,7 @@ public class Product implements Serializable{
 	@ManyToMany(mappedBy = "products")
 	private List<CommandProduct> commandproducts;
 	@ManyToOne
-	private Aisel aisel;
+	private Radius radius;
 	@ManyToMany(mappedBy = "products")
 	private List<Cart>carts;
 	@ManyToMany(mappedBy = "products")
@@ -57,8 +57,8 @@ public class Product implements Serializable{
 	
 	public Product(int idProduct, String productName, String picture, String description, float buyPrice,
 			float sellPrice, boolean newProduct, String barCode, Date createdAt, int mostViewed, int tva, int weigth,
-			int quantity, User user, List<Promotion> promotions, Category category,
-			List<CommandProduct> commandproducts, Aisel aisel, List<Cart> carts, List<Stock> stocks) {
+			int quantity, UserConsomi user, List<Promotion> promotions, Category category,
+			List<CommandProduct> commandproducts, Radius radius, List<Cart> carts, List<Stock> stocks) {
 		super();
 		this.idProduct = idProduct;
 		this.productName = productName;
@@ -72,20 +72,20 @@ public class Product implements Serializable{
 		this.mostViewed = mostViewed;
 		this.tva = tva;
 		this.weigth = weigth;
-		this.quantity = quantity;
+		
 		this.user = user;
 		this.promotions = promotions;
 		this.category = category;
 		this.commandproducts = commandproducts;
-		this.aisel = aisel;
+		this.radius = radius;
 		this.carts = carts;
 		this.stocks = stocks;
 	}
 	
 	public Product(String productName, String picture, String description, float buyPrice, float sellPrice,
 			boolean newProduct, String barCode, Date createdAt, int mostViewed, int tva, int weigth, int nbrPoints,
-			User user, List<Promotion> promotions, Category category, List<CommandProduct> commandproducts,
-			Aisel aisel, List<Cart> carts, List<Stock> stocks) {
+			UserConsomi user, List<Promotion> promotions, Category category, List<CommandProduct> commandproducts,
+			Radius radius, List<Cart> carts, List<Stock> stocks) {
 		super();
 		this.productName = productName;
 		this.picture = picture;
@@ -98,12 +98,12 @@ public class Product implements Serializable{
 		this.mostViewed = mostViewed;
 		this.tva = tva;
 		this.weigth = weigth;
-		this.quantity = quantity;
+		
 		this.user = user;
 		this.promotions = promotions;
 		this.category = category;
 		this.commandproducts = commandproducts;
-		this.aisel = aisel;
+		this.radius = radius;
 		this.carts = carts;
 		this.stocks = stocks;
 	}
@@ -117,9 +117,9 @@ public class Product implements Serializable{
 		return "Product [idProduct=" + idProduct + ", productName=" + productName + ", picture=" + picture
 				+ ", description=" + description + ", buyPrice=" + buyPrice + ", sellPrice=" + sellPrice
 				+ ", newProduct=" + newProduct + ", barCode=" + barCode + ", createdAt=" + createdAt + ", mostViewed="
-				+ mostViewed + ", tva=" + tva + ", weigth=" + weigth + ", quantity=" + quantity + ", user=" + user
+				+ mostViewed + ", tva=" + tva + ", weigth=" + weigth  + ", user=" + user
 				+ ", promotions=" + promotions + ", category=" + category + ", commandproducts=" + commandproducts
-				+ ", radius=" + aisel + ", carts=" + carts + ", stocks=" + stocks + "]";
+				+ ", radius=" + radius + ", carts=" + carts + ", stocks=" + stocks + "]";
 	}
 
 	public int getIdProduct() {
@@ -218,19 +218,11 @@ public class Product implements Serializable{
 		this.weigth = weigth;
 	}
 
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public User getUser() {
+	public UserConsomi getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserConsomi user) {
 		this.user = user;
 	}
 
@@ -258,12 +250,12 @@ public class Product implements Serializable{
 		this.commandproducts = commandproducts;
 	}
 
-	public Aisel getAisel() {
-		return aisel;
+	public Radius getRadius() {
+		return radius;
 	}
 
-	public void setAisel(Aisel aisel) {
-		this.aisel = aisel;
+	public void setRadius(Radius radius) {
+		this.radius = radius;
 	}
 
 	public List<Cart> getCarts() {
@@ -285,8 +277,6 @@ public class Product implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 	
 	
 	

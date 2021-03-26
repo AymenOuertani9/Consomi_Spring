@@ -23,16 +23,27 @@ public class Cart implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idcart;
 	private double total;
-	private boolean etat;
+
 	private String currency;
 	@ManyToMany
 	private List<Product> products;
 	@ManyToOne
-	private User user;
+	private UserConsomi user;
 	@OneToOne(mappedBy = "cart")
 	private Command command;
+	public Cart() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Cart(int idcart, double total, String currency, List<Product> products, UserConsomi user, Command command) {
+		super();
+		this.idcart = idcart;
+		this.total = total;
+		this.currency = currency;
+		this.products = products;
+		this.user = user;
+		this.command = command;
+	}
 
-	@ManyToMany
-	List<Stock>stocks;
 	
 }

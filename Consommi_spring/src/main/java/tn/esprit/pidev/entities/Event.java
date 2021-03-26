@@ -39,6 +39,7 @@ private String image;
 private int views;
 private int numberOfPlaces;
 private boolean status;
+//private float priceticket;
 
 @Enumerated(EnumType.STRING)
 private CategoryEvent categoryEvent;

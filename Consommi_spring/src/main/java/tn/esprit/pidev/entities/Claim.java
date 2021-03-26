@@ -27,11 +27,10 @@ public class Claim implements Serializable{
 	private String description;
 	@Temporal(TemporalType.DATE)
 	private Date dateclaim;
-	@Temporal(TemporalType.DATE)
-	private Date Appointement;
+	
 	private String Etat;
 	@ManyToOne
-	private User user;
+	private UserConsomi user;
 	@OneToOne
 	private Refund refund;
 	@OneToOne
@@ -40,6 +39,24 @@ public class Claim implements Serializable{
 	private Exchange exchange;
 	@OneToOne
 	private Bill bill;
+	public Claim() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Claim(int idclaim, int reference, String description, Date dateclaim, String etat, UserConsomi user,
+			Refund refund, Repair repair, Exchange exchange, Bill bill) {
+		super();
+		this.idclaim = idclaim;
+		this.reference = reference;
+		this.description = description;
+		this.dateclaim = dateclaim;
+		Etat = etat;
+		this.user = user;
+		this.refund = refund;
+		this.repair = repair;
+		this.exchange = exchange;
+		this.bill = bill;
+	}
 	
 
 }

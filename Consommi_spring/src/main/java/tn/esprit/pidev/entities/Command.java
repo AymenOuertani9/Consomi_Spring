@@ -26,13 +26,12 @@ public class Command implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idcommand;
 	private double AmountCommand;
-	@Temporal(TemporalType.DATE)
-	private Date DateCommand;
+	
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
 	@Temporal(TemporalType.DATE)
 	private Date DateSend;
-	private int numsend;
+	private String Etat;
 	private int numcommand;
 	private int tva;
 	@Enumerated(EnumType.STRING)
@@ -44,10 +43,28 @@ public class Command implements Serializable{
 	private Transaction transaction;
 	@OneToOne(mappedBy = "command")
 	private Bill bill;
-	@OneToOne(mappedBy = "command")
-	private DeliveryNote deliverynote;
+	@OneToOne
+	private UserConsomi user;
+@OneToOne(mappedBy = "commande")
+	private Delivery delivery;
 
+public Command() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public Command(double amountCommand, Date dateCommand, Date dateCreation, Date dateSend, int numsend, int numcommand,
+		int tva, ModePayement payement) {
+	super();
+	AmountCommand = amountCommand;
 	
+	DateCreation = dateCreation;
+	DateSend = dateSend;
+	
+	this.numcommand = numcommand;
+	this.tva = tva;
+	this.payement = payement;
+}
 
 	
 

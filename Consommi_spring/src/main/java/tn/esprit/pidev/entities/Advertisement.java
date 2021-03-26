@@ -1,6 +1,8 @@
 package tn.esprit.pidev.entities;
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +30,8 @@ public class Advertisement implements Serializable{
 	private String description;
 	private TypeAd ad;
 	private String image;
+	
+	private float cost;
 	@ManyToOne
 	private Event event;
 	
@@ -36,7 +40,7 @@ public class Advertisement implements Serializable{
 		super();
 	}
 	public Advertisement(int idAd, String name, Date startDate, Date endDate, int viewCount, String description,
-			TypeAd adve, String image, Event event) {
+			TypeAd adve, String image, Event event,float cost) {
 		super();
 		this.idAd = idAd;
 		this.name = name;
@@ -47,10 +51,11 @@ public class Advertisement implements Serializable{
 		this.ad = adve;
 		this.image = image;
 		this.event = event;
+		this.cost = cost;
 	}
 	
 	public Advertisement(String name, Date startDate, Date endDate, int viewCount, String description, TypeAd ad,
-			String image, Event event) {
+			String image, Event event,float cost) {
 		super();
 		this.name = name;
 		this.startDate = startDate;
@@ -60,6 +65,7 @@ public class Advertisement implements Serializable{
 		this.ad = ad;
 		this.image = image;
 		this.event = event;
+		this.cost = cost;
 	}
 	public int getIdAd() {
 		return idAd;
@@ -115,13 +121,22 @@ public class Advertisement implements Serializable{
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+	public float getCoast() {
+		return cost;
+	}
+	public void setCoast(float coast) {
+		this.cost = coast;
+	}
 	@Override
 	public String toString() {
 		return "Advertisement [idAd=" + idAd + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", viewCount=" + viewCount + ", description=" + description + ", ad=" + ad + ", image=" + image
-				+ ", event=" + event + "]";
+				+ ", coast=" + cost + ", event=" + event + "]";
+	}
+	
 	}
 	
 	
+	
 
-}
+

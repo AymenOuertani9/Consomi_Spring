@@ -22,11 +22,11 @@ public class Donation implements Serializable{
 	@ManyToOne
 	private Event event;
 	@ManyToOne
-	private User user;
+	private UserConsomi user;
 	public Donation() {
 		super();
 	}
-	public Donation(int idDonation, Date date, float amount, Event event, User user) {
+	public Donation(int idDonation, Date date, float amount, Event event, UserConsomi user) {
 		super();
 		this.idDonation = idDonation;
 		this.date = date;
@@ -34,7 +34,7 @@ public class Donation implements Serializable{
 		this.event = event;
 		this.user = user;
 	}
-	public Donation(Date date, float amount, Event event, User user) {
+	public Donation(Date date, float amount, Event event, UserConsomi user) {
 		super();
 		this.date = date;
 		this.amount = amount;
@@ -65,10 +65,10 @@ public class Donation implements Serializable{
 	public void setEvent(Event event) {
 		this.event = event;
 	}
-	public User getUser() {
+	public UserConsomi getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(UserConsomi user) {
 		this.user = user;
 	}
 	@Override

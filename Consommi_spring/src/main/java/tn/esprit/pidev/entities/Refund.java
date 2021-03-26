@@ -1,12 +1,15 @@
 package tn.esprit.pidev.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,11 +22,22 @@ public class Refund implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idrefund;
-	private String Type;
+	private String Description;
 	private float Amount;
-	@OneToOne(mappedBy = "refund")
-	private Claim claim;
-	
+	@Temporal(TemporalType.DATE)
+	private Date date;
+	public Refund() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Refund(int idrefund, String description, float amount, Date date) {
+		super();
+		this.idrefund = idrefund;
+		Description = description;
+		Amount = amount;
+		this.date = date;
+	}
+
 	
 
 }

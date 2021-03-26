@@ -33,4 +33,26 @@ public class Promotion implements Serializable{
 	@ManyToOne
 	private Product product;
 	
+	
+	
+	public Promotion() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public Promotion(int idpromotion, Date startingdate, Date endingDate, String libelle, String description,
+			long percentage, Product product) {
+		super();
+		this.idpromotion = idpromotion;
+		Startingdate = startingdate;
+		EndingDate = endingDate;
+		this.libelle = libelle;
+		Description = description;
+		this.percentage = percentage;
+		this.product = product;
+	}
+	
+	
 }

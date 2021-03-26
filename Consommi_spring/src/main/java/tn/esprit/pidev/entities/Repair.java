@@ -23,10 +23,17 @@ public class Repair implements Serializable {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private int idrepair;
 private float coast;
-private String type;
-@Temporal(TemporalType.DATE)
-private Date date;
-@OneToOne(mappedBy = "repair")
-private Claim claim;
+private String Description;
+public Repair() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+public Repair(int idrepair, float coast, String description) {
+	super();
+	this.idrepair = idrepair;
+	this.coast = coast;
+	Description = description;
+}
+
 
 }

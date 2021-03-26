@@ -28,6 +28,17 @@ public class CommandProduct implements Serializable{
 	private float price;
 	@ManyToMany
 	private List<Product> products;
+	public CommandProduct() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public CommandProduct(int idcomm, Date dateDelivery, float price, List<Product> products) {
+		super();
+		this.idcomm = idcomm;
+		DateDelivery = dateDelivery;
+		this.price = price;
+		this.products = products;
+	}
 	
 
 }

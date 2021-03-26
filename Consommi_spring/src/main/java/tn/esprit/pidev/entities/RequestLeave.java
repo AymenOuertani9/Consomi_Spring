@@ -26,8 +26,19 @@ private int idrequest;
 private Date Startingdate;
 @Temporal(TemporalType.DATE)
 private Date EndingDate;
-@ManyToOne
-private DeliveryMan deliveryman;
+private String Etat;
+public RequestLeave() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+public RequestLeave(int idrequest, Date startingdate, Date endingDate, String etat) {
+	super();
+	this.idrequest = idrequest;
+	Startingdate = startingdate;
+	EndingDate = endingDate;
+	Etat = etat;
+}
+
 
 
 

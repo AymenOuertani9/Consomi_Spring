@@ -32,6 +32,28 @@ public class Bill implements Serializable{
 	private Claim claim;
 	@OneToOne
 	private Command command;
+	@OneToOne
+	private UserConsomi user;
+	public Bill() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Bill(int idBill, int numBill, Date dateBill, float totalfinal, Date datereglement, TypeFacture tupefac,
+			Claim claim, Command command, UserConsomi user) {
+		super();
+		this.idBill = idBill;
+		this.numBill = numBill;
+		DateBill = dateBill;
+		this.totalfinal = totalfinal;
+		this.datereglement = datereglement;
+		this.tupefac = tupefac;
+		this.claim = claim;
+		this.command = command;
+		this.user = user;
+	}
+	
 	
 
 }
+
+

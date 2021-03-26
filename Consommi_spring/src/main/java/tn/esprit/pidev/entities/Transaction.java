@@ -27,6 +27,16 @@ public class Transaction implements Serializable{
 	private Date Datetransaction;
 	/*@OneToOne(mappedBy = "transaction")
 	private Order order;*/
+	public Transaction() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Transaction(int idtrans, float amountcommution, Date datetransaction) {
+		super();
+		this.idtrans = idtrans;
+		Amountcommution = amountcommution;
+		Datetransaction = datetransaction;
+	}
 	
 	
 

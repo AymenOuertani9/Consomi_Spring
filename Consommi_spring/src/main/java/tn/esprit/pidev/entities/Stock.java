@@ -26,52 +26,23 @@ public class Stock implements Serializable{
 	private int idstock;
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
-	private float quantity;
+	private float Quantity;
 	@ManyToOne
-	private User user;
+	private UserConsomi user;
 	@ManyToMany
 	private List<Product> products;
-	@ManyToMany
-	private List<Command> commande;
-	
-	
-	public int getIdstock() {
-		return idstock;
+	public Stock() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	public void setIdstock(int idstock) {
+	public Stock(int idstock, Date dateCreation, float quantity, UserConsomi user, List<Product> products) {
+		super();
 		this.idstock = idstock;
-	}
-	public Date getDateCreation() {
-		return DateCreation;
-	}
-	public void setDateCreation(Date dateCreation) {
 		DateCreation = dateCreation;
-	}
-	public float getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(float quantity) {
-		quantity = quantity;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
+		Quantity = quantity;
 		this.user = user;
-	}
-	public List<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	public List<Command> getCommandes() {
-		return commande;
-	}
-	public void setCommandes(List<Command> commandes) {
-		commande = commandes;
-	}
-	
 	
 	
 	
