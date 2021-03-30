@@ -1,4 +1,4 @@
-package tn.esprit.pidev.controllers;
+   package tn.esprit.pidev.controllers;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,13 +62,27 @@ public class PromotionController {
 	@ResponseBody
 		public Promotion getPromotionById(@PathVariable("idPromotion")int idPromotion) {
 				return iPromotionService.getPromosById(idPromotion);
-			}
+	
+	}
 	//creating a get mapping that retrieves all the promotion detail from the database   
 		@GetMapping("/promotion/get-all-promotion")  
 		private List<Promotion> getAllPromos()   
 		{  
 			return iPromotionService.getAllPromos();  
 		}  
-	 
+		//creating a get mapping that retrieves a specific promotion
+		 @PostMapping("/promotion/proposePromos")
+		 @ResponseBody
+		 public void getPromotionRed(@RequestBody Promotion p) {
+			 
+					 iPromotionService.proposePromos(p);
+				}
+		 
+			@PutMapping("/promotion/reduction-product/{id}")  
+			private String reductionProductPromotion(@PathVariable("id")int  id)   
+			{  
+				return iPromotionService.discountProductPromotion(id);  
+			} 
+		 
 	
 }

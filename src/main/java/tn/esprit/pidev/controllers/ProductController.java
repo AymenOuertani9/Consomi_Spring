@@ -1,30 +1,82 @@
-package tn.esprit.pidev.controllers;
+			package tn.esprit.pidev.controllers;
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import tn.esprit.pidev.config.FileUploadUtil;
+import tn.esprit.pidev.entities.Event;
 import tn.esprit.pidev.entities.Product;
+import tn.esprit.pidev.repositories.IUserRepository;
 import tn.esprit.pidev.services.IProductService;
+import tn.esprit.pidev.services.ProductServiceImpl;
 
 @RestController
 public class ProductController {
 	 @Autowired
 	 IProductService iProductService;
+
+	 
 	//creating post mapping method that insert product into database
-	 @PostMapping("/product/add-product")
-	 @ResponseBody()
-	 public int addProduct(@RequestBody Product p) {
-		    iProductService.addProduct(p);
-			return p.getIdProduct();
+		ObjectMapper objectMapper = new ObjectMapper();
+
+	//creating post mapping that post the event detail in the database  
+	@PostMapping(value="/product/add-product", consumes = {
+				MediaType.APPLICATION_JSON_VALUE,
+				MediaType.MULTIPART_FORM_DATA_VALUE
+	})  
+	private String addProduct(@RequestPart("prJson")String prJson,@RequestPart("picture") MultipartFile file){
+		Product product  = new Product();
+			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+			System.out.println("image name ="+fileName);
+			
+			try{
+				
+				product= objectMapper.readValue(prJson, Product.class);
+
+		    if(iProductService.addProduct(product)==-1) {
+		    	return "Product missing 619";
+		    }
+		    
+		    System.out.println("url ="+ServletUriComponentsBuilder.fromCurrentContextPath());
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/uploads/")
+					.path(fileName).toUriString();
+			System.out.println("file url =====>"+fileDownloadUri);
+			 
+			String fileNameRepo = StringUtils.cleanPath(file.getOriginalFilename());
+			String uploadDir = "uploads/product_image";
+ 
+				product.setPicture(fileNameRepo.getBytes());
+		         
+			FileUploadUtil.saveFile(uploadDir, fileNameRepo, file);
+
+            iProductService.addProduct(product);  
+		}catch(Exception e) {
+			return "Duplicated barecode product or exception=";
+		}
+		    return "Product added successfully!!";
 			
 		}
 	 
@@ -105,4 +157,15 @@ public class ProductController {
 				return new ResponseEntity<String>("Product invalid",HttpStatus.NOT_ACCEPTABLE);
 		}
 		*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

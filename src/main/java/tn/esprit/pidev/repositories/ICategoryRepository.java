@@ -19,5 +19,10 @@ public interface ICategoryRepository extends CrudRepository<Category,Integer> {
 	/**********************************Find category ByName***************************/
 	@Query("SELECT cat from Category cat WHERE cat.name =:name")
 	public Category findCategoryByName(@Param("name")String name);
+	/**********************************Find product ByName***************************/
+	@Query("SELECT cat from Category cat WHERE cat.name =:name")
+	public Category findProductByName(@Param("name")String name);
 
+	
+	
 }

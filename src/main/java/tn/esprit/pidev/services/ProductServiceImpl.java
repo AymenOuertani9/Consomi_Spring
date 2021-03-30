@@ -15,7 +15,7 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public boolean verifyProduct(String barCode) {
 		    {
-				System.out.println(barCode);
+				System.out.println(barCode); 
 				if (barCode.trim().startsWith("619")) {
 					return true;
 				} else
@@ -29,6 +29,7 @@ public class ProductServiceImpl implements IProductService {
 		
 		product.setCreatedAt(new Date());
 		if(product.getBarCode().startsWith("619")){
+			product.setPromotionEtat(false);
 			iProductRepository.save(product);
 			return product.getIdProduct();
 		}
@@ -44,10 +45,10 @@ public class ProductServiceImpl implements IProductService {
 		Product product = iProductRepository.findById(idProduct).get();
 		product.setProductName(p.getProductName());
 		product.setCreatedAt(p.getCreatedAt());
-		product.setBuyPrice(p.getBuyPrice());
+		product.setPrice(p.getPrice());
 		product.setTva(p.getTva());
 		product.setDescription(p.getDescription());
-		product.setSellPrice(p.getSellPrice());
+		
 		product.setPicture(p.getPicture());
 		product.setWeigth(p.getWeigth());
 		product.setNewProduct(p.isNewProduct());
@@ -70,8 +71,18 @@ public class ProductServiceImpl implements IProductService {
     /**************Creating getByid method that retrieve product detail from database************/
 	@Override
 	public Product getProductById(int id) {
-		return iProductRepository.findById(id).get();  
-	}
+		int countView;
+		Product p = iProductRepository.findById(id).get();
+		if(p == null) return null;
+		p.setMostViewed(p.getMostViewed()+1);
+	    countView = iProductRepository.updateViewCountProduct(p.getMostViewed()-1,p.getIdProduct());
+			countView++;
+			return p;
+
+		}
+	
+	
+	
 	/***************Creating getAll product by category method from database **************/
 	@Override
 	public List<Product>getProductsByCategory(String categoryName) {
@@ -147,7 +158,7 @@ public class ProductServiceImpl implements IProductService {
 	public Product findProductByBarCode(String barCode) {
 		return iProductRepository.findProductByBarCode(barCode);
 	}
-	
+
 
 	
-}
+} 

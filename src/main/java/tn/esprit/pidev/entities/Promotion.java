@@ -2,11 +2,13 @@ package tn.esprit.pidev.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,51 +29,39 @@ public class Promotion implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	private String description;
-	private long percentage;
+	private float percentage;
 	@ManyToOne
-	@JsonIgnore
 	private Product product;
-	public Promotion(int idPromotion, Date startDate, Date endDate, String libelle, String description, long percentage,
+	
+	
+	
+
+    public Promotion() {
+		super();
+	}
+    
+    public Promotion(int idPromotion, String libelle, Date startDate, Date endDate, String description, float percentage,
 			Product product) {
 		super();
 		this.idPromotion = idPromotion;
+		this.libelle = libelle;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.libelle = libelle;
 		this.description = description;
 		this.percentage = percentage;
 		this.product = product;
 	}
-	
-	
-	
-	public Promotion(Date startDate, Date endDate, String libelle, String description, long percentage,
+
+	public Promotion(String libelle, Date startDate, Date endDate, String description, float percentage,
 			Product product) {
 		super();
+		this.libelle = libelle;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.libelle = libelle;
 		this.description = description;
 		this.percentage = percentage;
 		this.product = product;
 	}
-
-
-
-	public Promotion() {
-		super();
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Promotion [idPromotion=" + idPromotion + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", libelle=" + libelle + ", description=" + description + ", percentage=" + percentage + ", product="
-				+ product + "]";
-	}
-
-
 
 	public int getIdPromotion() {
 		return idPromotion;
@@ -133,27 +123,33 @@ public class Promotion implements Serializable{
 
 
 
-	public long getPercentage() {
+	public float getPercentage() {
 		return percentage;
 	}
 
 
 
-	public void setPercentage(long percentage) {
+	public void setPercentage(float percentage) {
 		this.percentage = percentage;
 	}
 
-
-
-	public Product getProduct() {
+    public Product getProduct() {
 		return product;
 	}
-
-
 
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+	@Override
+	public String toString() {
+		return "Promotion [idPromotion=" + idPromotion + ", libelle=" + libelle + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", description=" + description + ", percentage=" + percentage + ", product="
+				+ product + "]";
+	}
+
+
+
 	
 	
 }

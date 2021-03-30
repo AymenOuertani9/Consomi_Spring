@@ -10,4 +10,6 @@ public interface IPromotionService {
 	public List<Promotion> getAllPromos();
 	public List<Promotion > getPromosByDate();
 	public void affecterProductPromotion(int idproduct,int idpromotion);
+	public void proposePromos(Promotion p) ;
+	public String discountProductPromotion(int id);
 }

@@ -29,6 +29,7 @@ public class Donation implements Serializable{
 	@JsonIgnore
 	private Event event;
 	
+	@JsonIgnore
 	@ManyToOne
 	private User user;
 	public Donation() {
@@ -81,7 +82,7 @@ public class Donation implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Donation [idDonation=" + idDonation + ", date=" + date + ", amount=" + amount + ", event=" + event
+		return "Donation [idDonation=" + idDonation + ", date=" + date + ", amount=" + amount 
 				+ ", user=" + user + "]";
 	}
 

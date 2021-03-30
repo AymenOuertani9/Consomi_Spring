@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Rating implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private int idrating;
+    private int idrating;
 	private int nbretoile;
 	@ManyToOne
 	private User user;

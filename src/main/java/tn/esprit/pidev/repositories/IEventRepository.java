@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.esprit.pidev.entities.CategoryEvent;
 import tn.esprit.pidev.entities.Event;
+import tn.esprit.pidev.entities.Jackpot;
 @Repository
 public interface IEventRepository extends CrudRepository<Event,Integer> {
 
@@ -33,9 +34,26 @@ public interface IEventRepository extends CrudRepository<Event,Integer> {
 	
 	public int updateEvent(@Param("title")String title,@Param("date")Date date,@Param("hour")Date hour,@Param("address")String address,
 			@Param("description")String description,@Param("numberOfPlaces")int numberOfPlaces,
-			@Param("priceTicket")float priceTicket,@Param("status")boolean status,@Param("image")String image,@Param("id")int id	);
+			@Param("priceTicket")float priceTicket,@Param("status")boolean status,@Param("image")byte[] image,@Param("id")int id	);
 
 	/************************************Event current date*************************************/
-	@Query("SELECT ev FROM Event ev WHERE ev.date >= CURRENT_DATE() and ev.hour >= CURRENT_TIME()")
+	@Query("SELECT ev FROM Event ev WHERE ev.date >= CURRENT_DATE() ")
 	public List<Event> upcomingEvents();
+	
+
+	@Query("SELECT e.jackpot FROM Event e WHERE e.jackpot =:jackpot")
+	public Jackpot findJackpot(@Param("jackpot")Jackpot jackpot);
+	
+	/***************************passedEvents*********************
+	 * 
+	 * @param 
+	 * @return List<Events>
+	 * 
+	 */
+	
+	@Query("SELECT ev FROM Event ev WHERE ev.date <= current_timestamp()")
+	public List<Event> passedEvents();
+	
 }
+
+

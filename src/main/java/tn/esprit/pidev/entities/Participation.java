@@ -3,33 +3,35 @@ package tn.esprit.pidev.entities;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "participation")
 public class Participation implements Serializable {
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
-	
-	
-	@EmbeddedId
+    @EmbeddedId
 	private ParticipationPK participationPK;
 	private float price;
 	
-	private String participationDate;
+	@Temporal(TemporalType.DATE)
+	private Date participationDate;
 
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "idUser", referencedColumnName = "iduser", insertable = false, updatable = false)
 
 	private User user;
@@ -41,7 +43,7 @@ public class Participation implements Serializable {
 		super();
 	}
 
-	public Participation(ParticipationPK participationPK, float price, String participationDate, User user,
+	public Participation(ParticipationPK participationPK, float price, Date participationDate, User user,
 			Event event) {
 		super();
 		this.participationPK = participationPK;
@@ -67,11 +69,11 @@ public class Participation implements Serializable {
 		this.price = price;
 	}
 
-	public String getParticipationDate() {
+	public Date getParticipationDate() {
 		return participationDate;
 	}
 
-	public void setParticipationDate(String participationDate) {
+	public void setParticipationDate(Date participationDate) {
 		this.participationDate = participationDate;
 	}
 
@@ -94,7 +96,7 @@ public class Participation implements Serializable {
 	@Override
 	public String toString() {
 		return "Participation [participationPK=" + participationPK + ", price=" + price + ", participationDate="
-				+ participationDate + ", user=" + user + ", event=" + event + "]";
+				+ participationDate + ", user=" + user + "]";
 	}
 }
 

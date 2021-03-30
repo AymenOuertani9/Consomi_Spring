@@ -13,10 +13,13 @@ public class AdvertisementServiceImpl implements IAdvertisementService{
 	private IAdvertisementRepository iAdvertisementRepository;
 	/**********************Creating add method that insert advertisement into database***************/
 	@Override
-	public Advertisement addAdvertisement(Advertisement adv) {
+	public String addAdvertisement(Advertisement adv) {
 		
+		if(adv.getEndDate().after(adv.getStartDate())) {
 		iAdvertisementRepository.save(adv);
-		return adv;
+		return "added with success";
+		}
+		return  "end date< start date";
 	}
     /*******************Creating deleting method that remove Advertisement by id  from database*********/
 	@Override
@@ -55,7 +58,7 @@ public class AdvertisementServiceImpl implements IAdvertisementService{
 		Advertisement advertisement = iAdvertisementRepository.findById(idadv).get();
 		String msg=" ";
 		
-		//bch n7awl men string l enum => CategoryEvent.valueOf(category)
+		//transformation string vers  enum => CategoryEvent.valueOf(category)
 		try {
 		for(TypeAd c : TypeAd.values()) {
 			if(c == TypeAd.valueOf(typeAd)) {

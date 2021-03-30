@@ -1,33 +1,80 @@
 package tn.esprit.pidev.controllers;
-
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import tn.esprit.pidev.config.FileUploadUtil;
 import tn.esprit.pidev.entities.CategoryEvent;
 import tn.esprit.pidev.entities.Event;
+import tn.esprit.pidev.entities.Participation;
 import tn.esprit.pidev.services.IEventService;
+import tn.esprit.pidev.services.IParticipationService;
 
 @RestController
 public class EventController {
-
-	@Autowired  
+    @Autowired  
 	private IEventService iEventService; 
-	
+    
+    @Autowired
+    private IParticipationService iParticipationService;
+	ObjectMapper objectMapper = new ObjectMapper();
+
 	//creating post mapping that post the event detail in the database  
-		@PostMapping("/event/add-event")  
-		private int addEvent(@RequestBody Event event)   
-		{  
-			iEventService.addEvent(event);  
-			return event.getIdEvent();  
+		@PostMapping(value="/event/add-event", consumes = {
+				MediaType.APPLICATION_JSON_VALUE,
+				MediaType.MULTIPART_FORM_DATA_VALUE
+		})  
+		private Event addEvent(@RequestPart("evJson")String evJson,@RequestPart("image") MultipartFile file
+)   
+		{  Event ev  = new Event();
+			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+			System.out.println("image name ="+fileName);
+			try {
+				ev= objectMapper.readValue(evJson, Event.class);
+			    
+			    System.out.println("url ="+ServletUriComponentsBuilder.fromCurrentContextPath());
+				String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/uploads/")
+						.path(fileName).toUriString();
+				System.out.println("file url =====>"+fileDownloadUri);
+				 
+				String fileNameRepo = StringUtils.cleanPath(file.getOriginalFilename());
+				String uploadDir = "uploads/event_image";
+				ev.setImage(fileNameRepo.getBytes());
+	            iEventService.addEvent(ev);  
+				FileUploadUtil.saveFile(uploadDir, fileNameRepo, file);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+
+			return ev;  
 		}
 	
 	//creating a delete mapping that deletes a specified event  
@@ -74,12 +121,23 @@ public class EventController {
     		}
       
     	//creating put mapping that affected participant event 
-		@PutMapping("/event/affecter-participant-event/{iduser}/{idevent}")  
+		/*@PutMapping("/event/affecter-participant-event/{iduser}/{idevent}")  
 		private String affecterEventUser(@PathVariable("iduser")int iduser,@PathVariable("idevent")int idevent)   
 		{  
 		   return iEventService.affecterEventUser(iduser, idevent);
 			
 		}
+		*/
+        
+      //creating put mapping that updates the event detail   
+      		@PutMapping("/event/affecter-participant-event/{iduser}/{idevent}")  
+      		private  String participateToEvent(@PathVariable("iduser")int iduser,@PathVariable("idevent")int idevent)   
+      		{  
+      		
+      			String result = iParticipationService.addParticipation(iduser, idevent);
+      		    return result;
+      			
+      		}
 		
 		//creating put mapping that affectedCategoryEvent  
 		@PutMapping("/event/affecter-category-event/{category}/{idevent}")  
@@ -89,11 +147,18 @@ public class EventController {
 					return iEventService.affecterCategoryEvent(category, idevent);
 					
 		}
-		//display event By views
+		//display views of Top 3 events
 		@GetMapping("/event/displaybestEventsByViews")
-		public Map<Integer,Integer> displaybestEventsByViews(){
+		public List<String>  displaybestEventsByViews(){
+			return iEventService.displayBestEventsByViews();
+			}
+		
+		@GetMapping("/event/bestEventsByViews")
+		public Map<Integer, Integer> bestEventsByViews(){
 			return iEventService.getEventsByViews();
 			}
+		//display top 3 events by views 
+		
 		//affected advertisement  
 		@PutMapping("/event/affected-advertisement-event/{idevent}/{idavert}")
 		@ResponseBody
@@ -107,6 +172,12 @@ public class EventController {
 			List<Event>upevents = iEventService.upcomingEvents();
 			return upevents;
 		}
+		
+		@GetMapping("/event/displayPassedEvent")
+		public List<Event> passedEvents() {
+			List<Event>upevents = iEventService.passedEvents();
+			return upevents;
+		}
 		//affected Jackpot  
 		//@PutMapping("/event/affected-jackpot-event/{idevent}/{idjack}")
 		//@ResponseBody
@@ -115,5 +186,39 @@ public class EventController {
 			return iEventService.affecterEventJackpot(idjack, idevent);
 		}*/
 		
+		@DeleteMapping("/event/delete-canceled-event/{idevent}")
+		@ResponseBody
+		public ResponseEntity<String>deleteCanceledEvent(@PathVariable("idevent")int idevent) {
+			iEventService.refundUsers(idevent);
+			iEventService.deleteEvent(idevent);
+			return new ResponseEntity<String>("Event canceled with upgrading price and refund money to user participate",HttpStatus.ACCEPTED);
+
+		}
 		
+		@GetMapping("/event/displayBestEventsByParticipations")
+		public List<String> displayBestEventsByParticipations() {
+			return iEventService.displayEventsByParticipants();
+			
+		}
+		
+		@GetMapping("/event/displayEventsByCollAmount")
+		public List<String> displayEventsByCollAmount() {
+			return iEventService.displayEventsByCollAmount();
+			
+		}
+		@GetMapping("/event/retrieve-all-Participations")
+		public List<Participation> getParticipations(){
+			return iParticipationService.participationsList();
+		}
+		
+		@GetMapping("/event/getEventsBetweenTwoDates/{date1}/{date2}")
+		public List<String> getEventBetweenTwoDates(@PathVariable("date1")String date1,@PathVariable("date2")String date2) throws ParseException{
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			Date date1Converted = dateFormat.parse(date1);
+			Date date2Converted = dateFormat.parse(date2);
+			return iEventService.getEventTwoDatesBeetween(date1Converted,date2Converted);
+		}
+		
+	
 }

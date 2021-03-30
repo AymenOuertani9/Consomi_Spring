@@ -15,9 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Role implements Serializable{
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +25,54 @@ private String Description;
 private Roletype type;
 @OneToMany(mappedBy = "role")
 private List<User>users;
+public Role() {
+	super();
+}
+
+public Role(int idRole, String description, Roletype type, List<User> users) {
+	super();
+	this.idRole = idRole;
+	Description = description;
+	this.type = type;
+	this.users = users;
+}
+
+
+public Role(String description, Roletype type, List<User> users) {
+	super();
+	Description = description;
+	this.type = type;
+	this.users = users;
+}
+public Role(String description, Roletype type) {
+	super();
+	Description = description;
+	this.type = type;
+}
+public int getIdRole() {
+	return idRole;
+}
+public void setIdRole(int idRole) {
+	this.idRole = idRole;
+}
+public String getDescription() {
+	return Description;
+}
+public void setDescription(String description) {
+	Description = description;
+}
+public Roletype getType() {
+	return type;
+}
+public void setType(Roletype type) {
+	this.type = type;
+}
+public List<User> getUsers() {
+	return users;
+}
+public void setUsers(List<User> users) {
+	this.users = users;
+}
 
 
 }

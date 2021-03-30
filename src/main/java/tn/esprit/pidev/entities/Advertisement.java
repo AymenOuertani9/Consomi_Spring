@@ -7,13 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 @Entity
 public class Advertisement implements Serializable{
 	/**
@@ -32,7 +31,9 @@ public class Advertisement implements Serializable{
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private TypeAd ad;
-	private String image;
+	
+	@Lob
+	private byte[] image;
 	private float cost;
 	@ManyToOne
 	@JsonIgnore
@@ -41,7 +42,7 @@ public class Advertisement implements Serializable{
 		super();
 	}
 	public Advertisement(int idAd, String name, Date startDate, Date endDate, int viewCount, String description,
-			TypeAd adve, String image, Event event,float cost) {
+			TypeAd adve, byte[]  image, Event event,float cost) {
 		super();
 		this.idAd = idAd;
 		this.name = name;
@@ -56,7 +57,7 @@ public class Advertisement implements Serializable{
 	}
 	
 	public Advertisement(String name, Date startDate, Date endDate, int viewCount, String description, TypeAd ad,
-			String image, Event event,float cost) {
+			byte[]  image, Event event,float cost) {
 		super();
 		this.name = name;
 		this.startDate = startDate;
@@ -110,10 +111,10 @@ public class Advertisement implements Serializable{
 	public void setAd(TypeAd ad) {
 		this.ad = ad;
 	}
-	public String getImage() {
+	public byte[]  getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(byte[]  image) {
 		this.image = image;
 	}
 	public Event getEvent() {

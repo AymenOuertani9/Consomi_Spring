@@ -18,15 +18,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Command implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idcommand;
 	private double AmountCommand;
-	
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
 	@Temporal(TemporalType.DATE)
@@ -48,6 +45,10 @@ public class Command implements Serializable{
 @OneToOne(mappedBy = "commande")
 	private Delivery delivery;
 
+public Command() {
+	super();
+}
+
 public Command(double amountCommand, Date dateCommand, Date dateCreation, Date dateSend, int numsend, int numcommand,
 		int tva, ModePayement payement) {
 	super();
@@ -59,6 +60,26 @@ public Command(double amountCommand, Date dateCommand, Date dateCreation, Date d
 	this.numcommand = numcommand;
 	this.tva = tva;
 	this.payement = payement;
+}
+
+public Command(int idcommand, double amountCommand, Date dateCreation, Date dateSend, String etat, int numcommand,
+		int tva, ModePayement payement, Boolean validpayement, Cart cart, Transaction transaction, Bill bill, User user,
+		Delivery delivery) {
+	super();
+	this.idcommand = idcommand;
+	AmountCommand = amountCommand;
+	DateCreation = dateCreation;
+	DateSend = dateSend;
+	Etat = etat;
+	this.numcommand = numcommand;
+	this.tva = tva;
+	this.payement = payement;
+	this.validpayement = validpayement;
+	this.cart = cart;
+	this.transaction = transaction;
+	this.bill = bill;
+	this.user = user;
+	this.delivery = delivery;
 }
 
 	

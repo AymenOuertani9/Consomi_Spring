@@ -17,27 +17,27 @@ public class ParticipationPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int idUser;
 	private int idEvent;
-	private int number;
+	//private int number;
 	
 	
 	
 	public ParticipationPK() {
 		super();
 	}
-	public ParticipationPK(int idUser, int idEvent,int number) {
+	public ParticipationPK(int idUser, int idEvent) {
 		super();
 		this.idUser = idUser;
 		this.idEvent = idEvent;
-		this.number = number;
+		//this.number = number;
 	}
 	
 	
-	public int getNumber() {
+	/*public int getNumber() {
 		return number;
 	}
 	public void setNumber(int number) {
 		this.number = number;
-	}
+	}*/
 	public int getIdUser() {
 		return idUser;
 	}
@@ -50,6 +50,11 @@ public class ParticipationPK implements Serializable {
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
+	@Override
+	public String toString() {
+		return "ParticipationPK [idUser=" + idUser + ", idEvent=" + idEvent + "]";
+	}
+	
 	
 	
 }

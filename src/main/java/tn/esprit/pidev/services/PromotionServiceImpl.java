@@ -1,13 +1,18 @@
 package tn.esprit.pidev.services;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import tn.esprit.pidev.entities.Category;
 import tn.esprit.pidev.entities.Product;
 import tn.esprit.pidev.entities.Promotion;
 import tn.esprit.pidev.repositories.IProductRepository;
 import tn.esprit.pidev.repositories.IPromotionRepository;
-
 @Service
 public class PromotionServiceImpl implements IPromotionService{
 	@Autowired
@@ -66,14 +71,88 @@ public class PromotionServiceImpl implements IPromotionService{
 		}
 		return currentPromotions;
 	}
-    /***************Affected ProductPromotion ***********/
+    /********************************Affected ProductPromotion *****************************************/
 	@Override
 	public void affecterProductPromotion(int idproduct,int idpromotion) {
 		Product product = iProductRepository.findById(idproduct).get();
 		Promotion promotion = iPromotionRepository.findById(idpromotion).get();
-		promotion.setProduct(product);
-		iPromotionRepository.save(promotion);
+	        promotion.setProduct(product);
+	        iPromotionRepository.save(promotion);
 
 	}
+	/***********************************************Promotion*********************************************/
+@Override
+	@Scheduled(fixedDelay = 1000000)
+	public void proposePromos(Promotion promotion) {
+		List<Integer> products = iPromotionRepository.getRedZonProduct(22);// product that expire in 30 day
+        //Count Achat //
+		List<Product>results = new ArrayList<Product>();//list
+       //get only non duplicated values from list product getRedZoneProduct
+		Set<Integer>filtreProduct = new HashSet<>(products);
+        List<Product>productsList = new ArrayList<>();//list 
+		Map<Category,List<Product>> promosByCategory= new HashMap<>(); //kol cat endo liste des products lybch tsirlihom promo
+		List<Product> l=new ArrayList<Product>();//liste
+		List<Promotion> resP = new ArrayList<>();
+		resP = iPromotionRepository.getAllPromotion();
+		Map<Integer,Integer> h = new HashMap<>();
+		int k =0;
+		List<Integer>copyOfSet = new ArrayList<>();
+			iProductRepository.findAllById(filtreProduct).forEach(prod ->results.add(prod));//bch njib les products selon les ids wn7outhom fi liste esmha result	
+			copyOfSet.addAll(filtreProduct);
+			System.out.println("sizeee=====>"+copyOfSet.size());
+			for(int index=0 ; index<copyOfSet.size();index++) {
+						for(int  i =index; i <products.size();i++) {
+							if(copyOfSet.get(index)== products.get(i)) {
+								k++;
+									h.put(copyOfSet.get(index),k);
+									
+							}		
+						}
+			k =0;
+			System.out.println(h.size());
+			System.out.println("hashmap =="+h);
 
-}
+			}
+			//int c = 0;
+			 for (Map.Entry<Integer, Integer> entry : h.entrySet()) {
+					if(entry.getValue() < 5 && iProductRepository.findById(entry.getKey()).get().getMostViewed() <=4) {
+						   productsList.add(iProductRepository.findById(entry.getKey()).get());
+							promosByCategory.put(iProductRepository.findById(entry.getKey()).get().getCategory(),new ArrayList<Product>());
+							l= promosByCategory.get(iProductRepository.findById(entry.getKey()).get().getCategory());
+							l.add(iProductRepository.findById(entry.getKey()).get());
+							promosByCategory.put(iProductRepository.findById(entry.getKey()).get().getCategory(), l);
+                            System.out.println(iProductRepository.findById(entry.getKey()));		
+                           //promotion.get(c).setProduct(iProductRepository.findById(entry.getKey()).get());
+						    System.out.println("size=========="+productsList.size());
+				 			}
+							}
+				iPromotionRepository.deleteAll();
+				//List<Product>currentPrice =  (List<Product>) iProductRepository.findAllById(products);
+			    for(int i = 0 ; i < productsList.size();i++) {
+                     promotion.setProduct(iProductRepository.findById(productsList.get(i).getIdProduct()).get());
+			         System.out.println("hello="+promotion.getProduct().getIdProduct());
+					 //productsList.remove(productsList.indexOf(productsList.get(i)));
+				     System.out.println("product list ===>"+iProductRepository.findById(productsList.get(i).getIdProduct()).get());	
+                     iPromotionRepository.addCustomPromotion(promotion.getLibelle(),promotion.getStartDate(),promotion.getEndDate(),promotion.getPercentage(),promotion.getDescription(),promotion.getProduct());
+						if(promotion.getProduct().isPromotionEtat() == false ) {
+							{
+								float discPercent =(100f-promotion.getPercentage())/100f; 
+                                float newPrice = promotion.getProduct().getPrice()* discPercent;
+								promotion.getProduct().setPrice(newPrice);
+								promotion.getProduct().setPromotionEtat(true);
+								iProductRepository.save(promotion.getProduct());
+							}
+							}
+						}
+			 }
+@Override
+	public String discountProductPromotion(int id ) {
+		return "No product founded for promotion";
+		
+	}	
+			 	
+				
+	}
+	
+
+			 

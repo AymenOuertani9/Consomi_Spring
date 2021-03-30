@@ -2,12 +2,16 @@ package tn.esprit.pidev.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,18 +27,21 @@ public class Product implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idProduct;
 	private String productName;
-	private String picture;
+	@Lob
+	private byte[] picture;
+	//private String picture;
 	private String description;
-	private float buyPrice;
-	private float sellPrice;
+	private float price;
 	private boolean newProduct;
-	@Column(name="barCode", unique=true)
+    @Column(name="barCode", unique=true)
 	private String barCode;
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
 	private int mostViewed;
 	private int tva;
 	private int weigth;
+private boolean promotionEtat;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
 	private List<Promotion>promotions;
 	@ManyToOne
@@ -46,9 +53,32 @@ public class Product implements Serializable{
 	private Radius radius;
 	@ManyToMany(mappedBy = "products")
 	private List<Cart>carts;
+	@JsonIgnore
 	@ManyToMany(mappedBy = "products")
 	private List<Stock>stocks;
-	public Product(int idProduct, String productName, String picture, String description, float buyPrice,
+	
+	 // Don't create getter and setter methods for this object
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Evaluation> userProductRatings;
+	
+	
+	public Product(String productName, String description,float price,boolean newProduct, String barCode,int mostViewed,int tva,int weigth,boolean promotionEtat,Category category) {
+		super();
+		this.productName = productName;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+		this.newProduct = newProduct;
+		this.barCode = barCode;
+		this.mostViewed = mostViewed;
+		this.promotionEtat = promotionEtat;
+		this.mostViewed = tva;
+		this.mostViewed = weigth;
+
+
+	}
+
+	public Product(int idProduct, String productName, byte[] picture, String description, float price,
 			float sellPrice, boolean newProduct, String barCode, Date createdAt, int mostViewed, int tva, int weigth,
 			int quantity, User user, List<Promotion> promotions, Category category,
 			List<CommandProduct> commandproducts, Radius radius, List<Cart> carts, List<Stock> stocks) {
@@ -57,40 +87,13 @@ public class Product implements Serializable{
 		this.productName = productName;
 		this.picture = picture;
 		this.description = description;
-		this.buyPrice = buyPrice;
-		this.sellPrice = sellPrice;
+		this.price = price;
 		this.newProduct = newProduct;
 		this.barCode = barCode;
 		this.createdAt = createdAt;
 		this.mostViewed = mostViewed;
 		this.tva = tva;
 		this.weigth = weigth;
-		
-		this.promotions = promotions;
-		this.category = category;
-		this.commandproducts = commandproducts;
-		this.radius = radius;
-		this.carts = carts;
-		this.stocks = stocks;
-	}
-	
-	public Product(String productName, String picture, String description, float buyPrice, float sellPrice,
-			boolean newProduct, String barCode, Date createdAt, int mostViewed, int tva, int weigth, int nbrPoints,
-			User user, List<Promotion> promotions, Category category, List<CommandProduct> commandproducts,
-			Radius radius, List<Cart> carts, List<Stock> stocks) {
-		super();
-		this.productName = productName;
-		this.picture = picture;
-		this.description = description;
-		this.buyPrice = buyPrice;
-		this.sellPrice = sellPrice;
-		this.newProduct = newProduct;
-		this.barCode = barCode;
-		this.createdAt = createdAt;
-		this.mostViewed = mostViewed;
-		this.tva = tva;
-		this.weigth = weigth;
-		
 		this.promotions = promotions;
 		this.category = category;
 		this.commandproducts = commandproducts;
@@ -102,17 +105,64 @@ public class Product implements Serializable{
 	public Product() {
 		super();
 	}
-
+  
 	
 
-	@Override
-	public String toString() {
-		return "Product [idProduct=" + idProduct + ", productName=" + productName + ", picture=" + picture
-				+ ", description=" + description + ", buyPrice=" + buyPrice + ", sellPrice=" + sellPrice
-				+ ", newProduct=" + newProduct + ", barCode=" + barCode + ", createdAt=" + createdAt + ", mostViewed="
-				+ mostViewed + ", tva=" + tva + ", weigth=" + weigth + ", promotions=" + promotions + ", category="
-				+ category + ", commandproducts=" + commandproducts + ", radius=" + radius + ", carts=" + carts
-				+ ", stocks=" + stocks + "]";
+
+
+	public boolean isPromotionEtat() {
+		return promotionEtat;
+	}
+
+	public void setPromotionEtat(boolean promotionEtat) {
+		this.promotionEtat = promotionEtat;
+	}
+
+	public Product(int idProduct, String productName, byte[] picture, String description, float price,
+			boolean newProduct, String barCode, Date createdAt, int mostViewed, int tva, int weigth,
+			List<Promotion> promotions, Category category, List<CommandProduct> commandproducts, Radius radius,
+			List<Cart> carts, List<Stock> stocks) {
+		super();
+		this.idProduct = idProduct;
+		this.productName = productName;
+		this.picture = picture;
+		this.description = description;
+		this.price = price;
+		this.newProduct = newProduct;
+		this.barCode = barCode;
+		this.createdAt = createdAt;
+		this.mostViewed = mostViewed;
+		this.tva = tva;
+		this.weigth = weigth;
+		this.promotions = promotions;
+		this.category = category;
+		this.commandproducts = commandproducts;
+		this.radius = radius;
+		this.carts = carts;
+		this.stocks = stocks;
+	}
+
+	public Product(String productName, byte[] picture, String description, float price, boolean newProduct,
+			 String barCode, Date createdAt, int mostViewed, int tva, int weigth,
+			List<Promotion> promotions, Category category, List<CommandProduct> commandproducts, Radius radius,
+			List<Cart> carts, List<Stock> stocks) {
+		super();
+		this.productName = productName;
+		this.picture = picture;
+		this.description = description;
+		this.price = price;
+		this.newProduct = newProduct;
+		this.barCode = barCode;
+		this.createdAt = createdAt;
+		this.mostViewed = mostViewed;
+		this.tva = tva;
+		this.weigth = weigth;
+		this.promotions = promotions;
+		this.category = category;
+		this.commandproducts = commandproducts;
+		this.radius = radius;
+		this.carts = carts;
+		this.stocks = stocks;
 	}
 
 	public int getIdProduct() {
@@ -131,11 +181,11 @@ public class Product implements Serializable{
 		this.productName = productName;
 	}
 
-	public String getPicture() {
+	public byte[] getPicture() {
 		return picture;
 	}
 
-	public void setPicture(String picture) {
+	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
 
@@ -147,22 +197,7 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-	public float getBuyPrice() {
-		return buyPrice;
-	}
-
-	public void setBuyPrice(float buyPrice) {
-		this.buyPrice = buyPrice;
-	}
-
-	public float getSellPrice() {
-		return sellPrice;
-	}
-
-	public void setSellPrice(float sellPrice) {
-		this.sellPrice = sellPrice;
-	}
-
+	
 	public boolean isNewProduct() {
 		return newProduct;
 	}
@@ -261,9 +296,25 @@ public class Product implements Serializable{
 		this.stocks = stocks;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public float getPrice() {
+		return price;
 	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [idProduct=" + idProduct + ", productName=" + productName + ", picture=" + picture
+				+ ", description=" + description + ", price=" + price + ", newProduct=" + newProduct + ", barCode="
+				+ barCode + ", createdAt=" + createdAt + ", mostViewed=" + mostViewed + ", tva=" + tva + ", weigth="
+				+ weigth +  ", category=" + category + ", commandproducts="
+				+ commandproducts + ", radius=" + radius + ", carts=" + carts + ", stocks=" + stocks + "]";
+	}
+
+
+
 	
 	
 	

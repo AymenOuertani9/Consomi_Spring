@@ -24,6 +24,6 @@ public interface IAdvertisementRepository extends CrudRepository<Advertisement, 
 			+ " WHERE e.idAd = :idAd")
 	
 	public int updateAdvertisement(@Param("name")String name,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("description")String description,
-			@Param("ad")TypeAd ad,@Param("image")String image,
+			@Param("ad")TypeAd ad,@Param("image")byte[] image,
 			@Param("cost")float cost,@Param("idAd")int idAd);
 }
