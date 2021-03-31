@@ -30,10 +30,9 @@ public class Stock implements Serializable{
 	@ManyToOne
 	private User user;
 	@ManyToMany
-	private List<Product> products;
-	@ManyToMany
 	private List<Command> commande;
-	
+	@ManyToMany(mappedBy = "stocks")
+	private List<Product> products;
 	
 	public int getIdstock() {
 		return idstock;

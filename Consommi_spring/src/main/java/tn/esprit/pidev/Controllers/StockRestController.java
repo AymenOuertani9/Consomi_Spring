@@ -1,5 +1,7 @@
 package tn.esprit.pidev.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.esprit.pidev.entities.Ads;
 import tn.esprit.pidev.entities.Stock;
 import tn.esprit.pidev.service.StockService;
 
@@ -44,16 +47,18 @@ public class StockRestController {
 	
 	@GetMapping("GetStock/{prodId}")
 	@ResponseBody
-	public void GetStockByProduct(@PathVariable("prodId") int ProductId){
+	public Stock GetStockByProduct(@PathVariable("prodId") int ProductId){
 		
-		stockservice.getStockByProduct(ProductId);
+		return stockservice.getStockByProduct(ProductId);
+		
 	} 
 	
-	@GetMapping("GetStock/{quan}")
+	@GetMapping("GetStockQuan/{quan}")
 	@ResponseBody
-	public void GetStockByQuantity(@PathVariable("quan") float quan){
+	public List<Stock> GetStockByQuantity(@PathVariable("quan") float quan){
 		
-		stockservice.getStockbyQuantity(quan);
+		List<Stock> list =stockservice.getStockbyQuantity(quan);
+		return list;
 	} 
 	
 

@@ -14,5 +14,7 @@ public interface IAdsService {
 	List<Ads> GetAllAds();
 	List<Ads> GetAdsByFDate(Date FDate);
 	List<Ads> GetAdsBySDate(Date SDate);
+	void previousStats(int prodId);
+	void ModTargetView_tot(int AdsId,int vCount);
 
 }

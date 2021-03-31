@@ -13,5 +13,6 @@ public interface IAdsRepository extends CrudRepository<Ads,Integer> {
 	
 	List<Ads> getAdsByStartDate(Date SDate);
 	List<Ads> getAdsByFinishDate(Date FDate);
+	List<Ads> getAdsByproduct(int prodId);
 
 }

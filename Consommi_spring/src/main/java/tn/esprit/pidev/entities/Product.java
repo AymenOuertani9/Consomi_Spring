@@ -48,11 +48,11 @@ public class Product implements Serializable{
 	@ManyToMany(mappedBy = "products")
 	private List<CommandProduct> commandproducts;
 	@ManyToOne
-	private Aisel aisel;
-	@ManyToMany(mappedBy = "products")
+	private Aisel aisel;;
+	@OneToMany(mappedBy = "products")
 	private List<Cart>carts;
-	@ManyToMany(mappedBy = "products")
-	private List<Stock>stocks;
+	@ManyToMany
+	private List<Stock> stocks;
 	
 	
 	public Product(int idProduct, String productName, String picture, String description, float buyPrice,
@@ -77,7 +77,6 @@ public class Product implements Serializable{
 		this.promotions = promotions;
 		this.category = category;
 		this.commandproducts = commandproducts;
-		this.aisel = aisel;
 		this.carts = carts;
 		this.stocks = stocks;
 	}
@@ -103,7 +102,6 @@ public class Product implements Serializable{
 		this.promotions = promotions;
 		this.category = category;
 		this.commandproducts = commandproducts;
-		this.aisel = aisel;
 		this.carts = carts;
 		this.stocks = stocks;
 	}
@@ -119,7 +117,7 @@ public class Product implements Serializable{
 				+ ", newProduct=" + newProduct + ", barCode=" + barCode + ", createdAt=" + createdAt + ", mostViewed="
 				+ mostViewed + ", tva=" + tva + ", weigth=" + weigth + ", quantity=" + quantity + ", user=" + user
 				+ ", promotions=" + promotions + ", category=" + category + ", commandproducts=" + commandproducts
-				+ ", radius=" + aisel + ", carts=" + carts + ", stocks=" + stocks + "]";
+				+ ", carts=" + carts + ", stocks=" + stocks + "]";
 	}
 
 	public int getIdProduct() {
@@ -258,14 +256,6 @@ public class Product implements Serializable{
 		this.commandproducts = commandproducts;
 	}
 
-	public Aisel getAisel() {
-		return aisel;
-	}
-
-	public void setAisel(Aisel aisel) {
-		this.aisel = aisel;
-	}
-
 	public List<Cart> getCarts() {
 		return carts;
 	}
@@ -285,6 +275,15 @@ public class Product implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public Aisel getAisel() {
+		return aisel;
+	}
+
+	public void setAisel(Aisel aisel) {
+		this.aisel = aisel;
+	}
+	
 	
 	
 	

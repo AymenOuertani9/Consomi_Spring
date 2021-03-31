@@ -1,5 +1,7 @@
 package tn.esprit.pidev.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import tn.esprit.pidev.entities.Ads;
 import tn.esprit.pidev.entities.Aisel;
 import tn.esprit.pidev.service.AiselService;
 
@@ -38,5 +42,12 @@ public class AiselRestController {
 		
 		aiselservice.Del_Aisel(aiselId);
 		
+	}
+	
+	@GetMapping("/AllAisel")
+	@ResponseBody
+	public List<Aisel> getAds(){
+		List<Aisel> list = aiselservice.GetAllAisel();
+		return list;
 	}
 }

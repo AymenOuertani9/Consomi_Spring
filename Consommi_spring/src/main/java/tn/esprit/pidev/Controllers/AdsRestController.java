@@ -1,6 +1,7 @@
 package tn.esprit.pidev.Controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class AdsRestController {
 		
 	}
 	
-	@PutMapping("/ModsDate/{AdsId}/{new_FDate}")
+	@PutMapping("/ModfDate/{AdsId}/{new_FDate}")
 	@ResponseBody
 	public Date Mod_FDate(@PathVariable("AdsId")int AdsId,@PathVariable("new_FDate") Date new_FDate){
 		
@@ -56,9 +57,9 @@ public class AdsRestController {
 	
 	@GetMapping("/GetAds")
 	@ResponseBody
-	public void getAds(){
-		
-		adsservice.GetAllAds();
+	public List<Ads> getAds(){
+		List<Ads> list = adsservice.GetAllAds();
+		return list;
 	}
 	
 	
@@ -68,10 +69,16 @@ public class AdsRestController {
 		adsservice.GetAdsByFDate(Fdate);
 	}
 	
-	@GetMapping("/GetAds/{FDate}")
+	@GetMapping("/GetAds/{SDate}")
 	@ResponseBody
 	public void getAdsBySDate(@PathVariable("Sdate") Date Sdate){
 		adsservice.GetAdsBySDate(Sdate);
+	}
+	
+	@GetMapping("/getPrevious/{prodId}")
+	@ResponseBody
+	public void GetpreviousStat(@PathVariable("prodId")int prodId){
+		adsservice.previousStats(prodId);
 	}
 	
 	
