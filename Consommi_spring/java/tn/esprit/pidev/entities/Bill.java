@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,11 +25,16 @@ public class Bill implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idBill;
 	private int numBill;
+	
+	private double totalfinal;
 	@Temporal(TemporalType.DATE)
-	private Date DateBill;
-	private float totalfinal;
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date datereglement;
-	private TypeFacture tupefac;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd-MM-yyyy")
+	private Date datebill;
+	@Enumerated(EnumType.STRING)
+	private TypeFacture typeofbill;
 	@OneToOne(mappedBy = "bill")
 	private Claim claim;
 	@OneToOne
@@ -44,16 +53,18 @@ public class Bill implements Serializable{
 	public void setNumBill(int numBill) {
 		this.numBill = numBill;
 	}
-	public Date getDateBill() {
-		return DateBill;
+	
+	
+	public Date getDatebill() {
+		return datebill;
 	}
-	public void setDateBill(Date dateBill) {
-		DateBill = dateBill;
+	public void setDatebill(Date datebill) {
+		this.datebill = datebill;
 	}
-	public float getTotalfinal() {
+	public double getTotalfinal() {
 		return totalfinal;
 	}
-	public void setTotalfinal(float totalfinal) {
+	public void setTotalfinal(double totalfinal) {
 		this.totalfinal = totalfinal;
 	}
 	public Date getDatereglement() {
@@ -62,11 +73,12 @@ public class Bill implements Serializable{
 	public void setDatereglement(Date datereglement) {
 		this.datereglement = datereglement;
 	}
-	public TypeFacture getTupefac() {
-		return tupefac;
+	
+	public TypeFacture getTypeofbill() {
+		return typeofbill;
 	}
-	public void setTupefac(TypeFacture tupefac) {
-		this.tupefac = tupefac;
+	public void setTypeofbill(TypeFacture typeofbill) {
+		this.typeofbill = typeofbill;
 	}
 	public Claim getClaim() {
 		return claim;
@@ -90,18 +102,19 @@ public class Bill implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Bill(int idBill, int numBill, Date dateBill, float totalfinal, Date datereglement, TypeFacture tupefac,
+	public Bill(int idBill, int numBill, float totalfinal, Date datereglement, Date datebill, TypeFacture typeofbill,
 			Claim claim, Command command, User user) {
 		super();
 		this.idBill = idBill;
 		this.numBill = numBill;
-		DateBill = dateBill;
 		this.totalfinal = totalfinal;
 		this.datereglement = datereglement;
-		this.tupefac = tupefac;
+		this.datebill = datebill;
+		this.typeofbill = typeofbill;
 		this.claim = claim;
 		this.command = command;
 		this.user = user;
 	}
-
+	
+	
 }

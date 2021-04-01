@@ -3,6 +3,8 @@ package tn.esprit.pidev.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.pidev.entities.Command;
+import tn.esprit.pidev.entities.Etat;
 import tn.esprit.pidev.entities.ModePayement;
 import tn.esprit.pidev.entities.Remarque;
 import tn.esprit.pidev.entities.User;
@@ -30,13 +33,7 @@ ICommandeService comserv;
 public List<Command> getCommandes(){
 	return comserv.getCommandes();
 }
-/*
-// URL : http://localhost:8081/SpringMVC/servlet/getCommandesOfClient/89/v/2021-02-24/2021-02-09/9996/enligne/true
-@GetMapping(value = "/getCommandesOfClient/{num}/{etat}/{dates}/{datec}/{amount}/{modep}/{validp}")
-public List<Command> getCommandesOfClient(@PathVariable("num")int numcommand,@PathVariable("etat") String Etat,@PathVariable("dates") Date DateSend,@PathVariable("datec") Date DateCreation,
-		@PathVariable("amount") double AmountCommand,@PathVariable("modep")  ModePayement payement,@PathVariable("validp")  Boolean validpayement){
-	return comserv.getCommandesOfClient(numcommand, Etat, DateSend, DateCreation, AmountCommand, payement, validpayement);
-}*/
+
 
 // URL : http://localhost:8081/SpringMVC/servlet/getCommande/{idc}
 @GetMapping(value = "/getCommande/{idc}")
@@ -61,10 +58,10 @@ public List<Command > findCommandByUser(@PathVariable ("idu") int userid) {
 	return comserv.findCommandByUser(userid);
 }
 
-//URL : http://localhost:8081/SpringMVC/servlet/affecterCartACommand/{idc}/{idcmd}
-@PutMapping(value = "/affecterCartACommand/{idc}/{idcmd}")
-public void affecterCartACommand(@PathVariable ("idc") int cartId,@PathVariable ("idcmd")  int commandId) {
-	comserv.affecterCartACommand(cartId, commandId);
+//URL : http://localhost:8081/SpringMVC/servlet/affecterCartACommand/{idc}/{idcmd}/{tva}/{iddeliv}
+@PutMapping(value = "/affecterCartACommand/{idc}/{idcmd}/{tva}/{iddeliv}")
+public void affecterCartACommand(@PathVariable ("idc") int cartId,@PathVariable ("idcmd")  int commandId ,@PathVariable("tva")int tva,@PathVariable("iddeliv")int deliveryid) {
+	comserv.affecterCartACommand(cartId, commandId,tva,deliveryid);
 }
 
 //URL : http://localhost:8081/SpringMVC/servlet/affecterCommandAUser/{iduser}/{idcmd}
@@ -96,9 +93,9 @@ public List<Command> selectAll() {
 	return comserv.selectAllorderbydate();
 }
 //URL : http://localhost:8081/SpringMVC/servlet/getCartTotalById/{idcart}/{tva}/{iddeliv}
-@GetMapping(value = "/getCartTotalById/{idcart}/{tva}/{iddeliv}")
-public double getAmountCommand(@PathVariable("idcart") int cartId,@PathVariable("tva")int tva,@PathVariable("iddeliv")int deliveryid)  {
-		return comserv.getAmountCommand(cartId, tva, deliveryid);
+@GetMapping(value = "/getCartTotalById/{idcart}/{idcom}/{iduser}")
+public double getAmountCommand(@PathVariable("idcart") int cartId,@PathVariable("idcom") int comandId,@PathVariable("iduser") int iduser)  {
+		return comserv.getAmountCommand(cartId, comandId,iduser);
 	}
 
 //URL : http://localhost:8081/SpringMVC/servlet/creercommande
@@ -137,4 +134,46 @@ public void cancel(@PathVariable("id") int id) {
 	comserv.cancel( id);
 }
 
+//URL : http://localhost:8081/SpringMVC/servlet/count/{x}
+@GetMapping(value = "/count/{x}")
+public long count(@PathVariable("x") Etat etat) {
+	return comserv.count(etat);
+}
+
+//URL : http://localhost:8081/SpringMVC/servlet/findByEtatOrderByDatecreationDesc/{x}
+@GetMapping(value = "/findByEtatOrderByDatecreationDesc/{x}")
+public List<Command> findByEtatOrderByDatecreationDesc(@PathVariable("x") Etat etat) {
+	return comserv.findByEtatOrderByDatecreationDesc(etat);
+}
+
+//URL : http://localhost:8081/SpringMVC/servlet/findByPayement/{x}
+@GetMapping(value = "/findByPayement/{x}")
+public List<Command> findByPayement(@PathVariable("x") ModePayement payement) {
+	return comserv.findByPayement(payement);
+}
+
+//URL : http://localhost:8081/SpringMVC/servlet/updatestatus/{vp}/{idc}
+@GetMapping(value = "/updatestatus/{vp}/{idc}")
+public String updatestatus(@PathVariable("vp") Boolean validpayement,@PathVariable("idc")int idcmd) {
+	return comserv.updatestatus(validpayement, idcmd);
+}
+
+//URL : http://localhost:8081/SpringMVC/servlet/updatestatusbydelivred/{idd}/{idc}
+@GetMapping(value = "/updatestatusbydelivred/{idd}/{idc}")
+public String updatestatusbydelivred( @PathVariable("idd") int iddelivery,@PathVariable("idc") int idcmd) {
+	return comserv.updatestatusbydelivred(iddelivery, idcmd);
+}
+
+
+//URL : http://localhost:8081/SpringMVC/servlet/findByDateCreation/{datecreation}
+@GetMapping(value = "/findByDateCreation/{datec}")
+public Command findByDateCreation(@PathParam("datec") @DateTimeFormat(pattern = "dd-MM-yyyy") Date datecreation) {
+	return comserv.findByDateCreation(datecreation);
+}
+
+//URL : http://localhost:8081/SpringMVC/servlet/findAllByDateCreation/{datec}
+@GetMapping(value = "/findAllByDateCreation/{datec}")
+public List<Command> findAllByDateCreation(@PathParam("datec") @DateTimeFormat(pattern = "dd-MM-yyyy") Date datecreation) {
+	return comserv.findAllByDateCreation(datecreation);
+}
 }

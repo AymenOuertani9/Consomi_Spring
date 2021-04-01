@@ -15,13 +15,16 @@ import org.slf4j.helpers.BasicMDCAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.pidev.entities.Bill;
 import tn.esprit.pidev.entities.Cart;
 import tn.esprit.pidev.entities.Command;
 import tn.esprit.pidev.entities.Delivery;
 import tn.esprit.pidev.entities.Etat;
+import tn.esprit.pidev.entities.EtatDelivry;
 import tn.esprit.pidev.entities.LigneComand;
 import tn.esprit.pidev.entities.ModePayement;
 import tn.esprit.pidev.entities.PaginationResult;
+import tn.esprit.pidev.entities.Product;
 import tn.esprit.pidev.entities.User;
 import tn.esprit.pidev.repository.ICartRepository;
 import tn.esprit.pidev.repository.ICommandRepository;
@@ -44,18 +47,8 @@ private Command commande;
 		
 		return comrep.findAll();
 	}
-	/*@Override
-	public List<Command> getCommandesOfClient(int numcommand, String Etat, Date DateSend, Date DateCreation,
-			double AmountCommand, ModePayement payement, Boolean validpayement) {
-		
-		return comrep.getCommandesOfClient(numcommand, Etat, DateSend, DateCreation, AmountCommand, payement, validpayement);
-	}
-*/
-	@Override
-	public void saveCommande(Cart cart) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 	@Override
 	public PaginationResult<Command> listCommande(int page, int maxResult, int maxNavigationPage) {
 		// @page = 1, 2, ...
@@ -98,10 +91,13 @@ private Command commande;
 		return comrep.getAllCommandByUser(userid);
 	}
 	@Override
-	public void affecterCartACommand(int cartId, int commandId) {
+	public void affecterCartACommand(int cartId, int commandId,int tva ,int deliveryid) {
+		
+		Delivery delivery=delivrep.findById(deliveryid).get();
 		Command cmd = comrep.findById(commandId).get();
 		Cart c = cartrep.findById(cartId).get();
 		cmd.setCart(c);
+		cmd.setAmountCommand(c.getTotal()+tva+delivery.getFraislivraison());
 		comrep.save(cmd);
 		
 	}
@@ -116,7 +112,7 @@ private Command commande;
 	
 	@Override
 	public Command AjouterCommand(Command c) {
-		// TODO Auto-generated method stub
+	
 		return comrep.save(c);
 	}
 	@Override
@@ -131,23 +127,34 @@ private Command commande;
 		 comrep.save(c);
 		 return c.getIdcommand();
 	}
-	
+	//afficher cmd ordonnées par datesend dec
 	@Override
 	public List<Command> selectAllorderbydate() {
 		
 		return comrep.selectAll();
 	}
-	public double getAmountCommand(int cartId,int tva,int deliveryid) {
-		Cart cart = cartrep.findById(cartId).get();
+	public double getAmountCommand(int cartId,int comandId,int iduser) {
+	/*	Cart cart = cartrep.findById(cartId).get();
 		Delivery delivery=delivrep.findById(deliveryid).get();
 		Command c = new Command();
-			double totalligne=cart.getTotal()+tva;
+			double totalligne=cart.getTotal();
 			 double AmountCommand=c.getAmountCommand()+delivery.getFraislivraison();
 			 AmountCommand=AmountCommand+totalligne;
-			
+			*/
+		Cart cart = cartrep.findById(cartId).get();
+		Command cmd = comrep.findById(comandId).get();
+		List<User>users=new ArrayList<>();
+		users.add(cart.getUser());
+		double total=0;
+		for(User u:users) {
+	   total=comrep.gettotalcommand(iduser,cartId);
+	    cmd.setAmountCommand(total);     
+		}
+		comrep.save(cmd);
+		return total;
 			
 		
-		return AmountCommand;	
+			
 	}
 	public void creercommande() {
 		
@@ -180,18 +187,16 @@ private Command commande;
 
 	    order.setEtat(Etat.CANCELED);
 	    comrep.save(order);
-	  }
+	
+	 }
+	 //afficher les cmd ordonnées par date creation  decroisant
 	@Override
 	
 	public List<Command> findByOrderByOrderDatecreationDesc() {
 		
 		return comrep.findByOrderByOrderDatecreationDesc();
 	}
-	@Override
-	public Command findByOrderStatusOrderByOrderDateDesc(String etat) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	@Override
 	public Integer countBetween(Date d1, Date d2) {
 		
@@ -217,4 +222,97 @@ private Command commande;
 		comrep.save(cmd);
 		
 	}
+	@Override
+	public long count(Etat etat) {
+		
+		return comrep.count(etat);
+	}
+
+
+	@Override
+	public List<Command> findByEtatOrderByDatecreationDesc(Etat etat) {
+		
+		return comrep.findByEtatOrderByDatecreationDesc(etat);
+	}
+
+
+	@Override
+	public List<Command> findByPayement(ModePayement payement) {
+		
+		return comrep.findByPayement(payement);
+	}
+
+
+	@Override
+	public String updatestatus( Boolean validpayement,int idcmd) {
+		
+		Command cmd = comrep.findById(idcmd).get();
+		if(validpayement==true) {
+			cmd.setEtat(Etat.ORDERED);
+			comrep.save(cmd);
+			return "the order is validated";
+		}
+		else if(validpayement==false)
+		{
+			cmd.setEtat(Etat.COMPLETE);
+			comrep.save(cmd);
+			return "the order is complete ";
+		}
+		return "";
+		
+		}
+	@Override
+		public String updatestatusbydelivred( int iddelivery,int idcmd) {
+			Delivery delivery =delivrep.findById(iddelivery).get();
+			Command cmd = comrep.findById(idcmd).get();
+		if(delivery.getEtat()==EtatDelivry.DELIVRED) {
+			cmd.setEtat(Etat.DELIVERY);
+			comrep.save(cmd);
+			return "the order is delivered";
+		}
+		else if (delivery.getEtat()==EtatDelivry.encours){
+			cmd.setEtat(Etat.PREPARING);
+			comrep.save(cmd);
+			return "the order is PREPARING";
+		}
+		else if (delivery.getEtat()==EtatDelivry.NDELIVRED) {
+			cmd.setEtat(Etat.CANCELED);
+			comrep.save(cmd);
+			return "the order is canceled";
+			
+		}
+		else {
+			return "";
+		}
+		
+	}
+	
+	@Override
+	public Command findByDateCreation(Date datecreation) {
+		
+		return comrep.findByDateCreation(datecreation);
+	}
+
+
+	@Override
+	public List<Command> findAllByDateCreation(Date datecreation) {
+		
+		return (List<Command>)comrep.getCommandByDateCreation(datecreation);
+	}
+
+
+	@Override
+	public Command findCommandUser(int iduser, int idc) {
+		
+		Command cmd = comrep.findById(idc).get();
+		List<User>users=new ArrayList<>();
+		users.add(cmd.getUser());
+		for(User u:users) {
+		cmd= comrep.getOne(idc);
+	}
+	
+return cmd;
+	}
+	
+	
 }

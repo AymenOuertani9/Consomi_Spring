@@ -3,6 +3,8 @@ package tn.esprit.pidev.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +26,8 @@ public class Delivery implements Serializable{
 	private String Adress;
 	private String Region;
 	private String City;
-	private String etat;
+	@Enumerated(EnumType.STRING)
+	private EtatDelivry etat;
 	private String description;
 	private double fraislivraison;
 	@ManyToOne
@@ -67,10 +70,11 @@ private Command commande;
 	public void setCity(String city) {
 		City = city;
 	}
-	public String getEtat() {
+	
+	public EtatDelivry getEtat() {
 		return etat;
 	}
-	public void setEtat(String etat) {
+	public void setEtat(EtatDelivry etat) {
 		this.etat = etat;
 	}
 	public String getDescription() {
@@ -96,6 +100,25 @@ private Command commande;
 	}
 	public void setFraislivraison(double fraislivraison) {
 		this.fraislivraison = fraislivraison;
+	}
+	public Delivery() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Delivery(int iddelivery, int reference, float weight, String adress, String region, String city,
+			EtatDelivry etat, String description, double fraislivraison, DeliveryMan deliveryman, Command commande) {
+		super();
+		this.iddelivery = iddelivery;
+		Reference = reference;
+		this.weight = weight;
+		Adress = adress;
+		Region = region;
+		City = city;
+		this.etat = etat;
+		this.description = description;
+		this.fraislivraison = fraislivraison;
+		this.deliveryman = deliveryman;
+		this.commande = commande;
 	}
 	
 

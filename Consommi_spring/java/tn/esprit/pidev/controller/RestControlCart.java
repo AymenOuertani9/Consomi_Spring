@@ -61,12 +61,13 @@ public class RestControlCart {
     public double getCartTotalById(@PathVariable("idlc") int lcId,@PathVariable("idcart") int cartId )  {
  		return cartsev.getCartTotalById(lcId ,cartId );
  	}
-	/*
+	
     // URL : http://localhost:8081/SpringMVC/servlet/deleteCartById/1
     @DeleteMapping("/deleteCartById/{idcart}") 
     public void deleteCartById(@PathVariable("idcart")int cartId) {
     	cartsev.deleteCartById(cartId);
     }
+    /*
  // URL : http://localhost:8081/SpringMVC/servlet/getAllCartProductsnames/{idcart}
     @GetMapping(value = "/getAllCartProductsnames/{idcart}")
     public List<String> getAllCartProductsnames(@PathVariable("idcart")int cartId) {
@@ -85,6 +86,8 @@ public class RestControlCart {
   	public int addOrUpdateCart(@RequestBody Cart cart) {
   		return cartsev.addOrUpdateCart(cart);
   	}
+  	
+  	
   	//http://localhost:8081/SpringMVC/servlet/affecterCartAUser/1/1
   	 	@PutMapping(value = "/affecterCartAUser/{iduser}/{idcart}") 
   	public void affecterCartAUser(@PathVariable("iduser")int userId,@PathVariable("idcart") int cartId) {
@@ -129,4 +132,15 @@ public class RestControlCart {
   	  public float updateQuantity(@PathVariable("qt") Integer qte,@PathVariable("idprod") Integer productid,@RequestBody User user) {
   		  return cartsev.updateQuantity(qte, productid, user);
   	  }*/
+    // URL : http://localhost:8081/SpringMVC/servlet/updateQuantity/{qt}/{idlc}/{idcrt}/{newqt}
+    @PutMapping(value = "/updateQuantity/{qt}/{idlc}/{idcrt}/{newqt}")
+    public String updateQuantity(@PathVariable("qt") Integer qte,@PathVariable("idlc") int lcid,@PathVariable("idcrt") int cartid,@PathVariable("newqt") Integer newqte) {
+    	return cartsev.updateQuantity(qte, lcid, cartid,newqte);
+    }
+    
+  //URL : http://localhost:8081/SpringMVC/servlet/getTotalcart/{idcart}/{idcom}/{iduser}
+    @GetMapping(value = "/getTotalcart/{idc}")
+    public double getTotalcart(@PathVariable("idc")int cartId) {
+    	return cartsev.getTotalcart(cartId);
+    }
 }

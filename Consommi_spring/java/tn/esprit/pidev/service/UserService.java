@@ -1,5 +1,7 @@
 package tn.esprit.pidev.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,11 @@ IUserRepository userep;
 	public User getUserById(int userId) {
 	
 		return userep.findById(userId).orElse(null);
+	}
+	@Override
+	public List<User> getAll() {
+		
+		return userep.findAll();
 	}
 
 }
