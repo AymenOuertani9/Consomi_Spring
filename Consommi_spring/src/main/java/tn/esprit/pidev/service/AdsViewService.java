@@ -48,8 +48,8 @@ public class AdsViewService implements IAdsViewService {
 
 	@Override
 	@Scheduled(cron="0 0 * * * ?")
-	public void AdsViewToday() {
-		adsviewrepository.findAll();		
+	public List<AdsView> AdsViewToday() {
+		return (List<AdsView>) adsviewrepository.findAll();		
 	}
 
 	@Override
@@ -81,7 +81,9 @@ public class AdsViewService implements IAdsViewService {
 		ArrayList eval=new ArrayList();
 		List<Ads> ads=(List<Ads>) adsrepository.findAll();
 		for(Ads ad : ads){
-		if(ad.getFinishDate()==new Date()){
+		System.out.println(eval);
+		if(ad.getFinishDate().toString().matches(LocalDate.now().toString())){
+		System.out.println("yes");
 		AdsView adview=(AdsView) adsviewrepository.getAdsViewByAds(ad);
 		if((ad!=null)&&(adview !=null)){
 			
@@ -93,7 +95,7 @@ public class AdsViewService implements IAdsViewService {
 			eval.add(tar);
 			eval.add(real);
 			eval.add(avg);
-			float per=(real/tar)*100;
+			float per=(real%tar);
 			eval.add(per);
 			if(per>=80){
 				eval.add("Successful Ad");

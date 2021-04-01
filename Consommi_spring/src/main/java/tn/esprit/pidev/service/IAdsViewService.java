@@ -10,7 +10,7 @@ public interface IAdsViewService {
 
 	int AddAdsView(AdsView adsview);
 	List<AdsView> getAllAdsView();
-	void AdsViewToday();
+	List<AdsView> AdsViewToday();
 	void Addview(int AdId, int userId);
 	ArrayList finalStats();
 	void AffectAdsviewtoAds(int AdId,AdsView adsview);

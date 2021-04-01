@@ -81,10 +81,10 @@ public class AiselService implements IAiselService {
 		}else {
 			prod.setAisel(aisel);
 			//aisel.getProducts().set(aisel.getProducts().size()+1, prod);
-			//List<Product> list=aisel.getProducts();
-			//list.add(prod);
-			//aisel.setProducts(list);
-			//aiselrepository.save(aisel);
+			List<Product> list=aisel.getProducts();
+			list.add(prod);
+			aisel.setProducts(list);
+			aiselrepository.save(aisel);
 			productrepository.save(prod);
 			return "the Product has been succefully added to the aisel";
 		}

@@ -2,10 +2,6 @@ package tn.esprit.pidev.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -32,7 +28,10 @@ public class StockService implements IStockService {
 	public Stock AddQStock(int prodID, float quan) {
 		// TODO Auto-generated method stub
 		Product prod= product.findById(prodID).orElse(null);
-		Stock st=stockrepository.findByproduct(prod);
+		//System.out.println(prod);
+		//Stock st=stockrepository.findByproduct(prod);
+		Stock st=prod.getStock();
+		//System.out.println(st);
 		float qex = st.getQuantity();
 		float newq=quan + qex;
 		st.setQuantity(newq);
@@ -76,13 +75,12 @@ public class StockService implements IStockService {
 		// TODO Auto-generated method stub
 		ArrayList<String> daily=new ArrayList();
 		List<Stock> stocks=(List<Stock>) stockrepository.findAll();		
-		stocks.forEach(stock ->{
+		for(Stock stock : stocks){
 			String name=stock.getProduct().getProductName();
 			float quantity=stock.getQuantity();
 			//return "Product Name"+name+":"+quantity;
-			daily.add("Product Name"+name+":"+quantity);
+			daily.add("Product Name :"+name+":"+quantity);
 		}
-		);
 		return daily;
 		
 	}

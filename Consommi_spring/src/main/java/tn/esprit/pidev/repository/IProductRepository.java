@@ -12,7 +12,7 @@ import tn.esprit.pidev.entities.Stock;
 @Repository
 public interface IProductRepository extends CrudRepository<Product,Integer> {
 	
-	List<Product> findByproductName(String Name);
+	Product findByproductName(String Name);
 	List<Product> findBycategory(Category category); 
 	
 }
