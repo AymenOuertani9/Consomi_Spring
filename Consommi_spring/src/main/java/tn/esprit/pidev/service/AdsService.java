@@ -1,6 +1,8 @@
 package tn.esprit.pidev.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +11,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.pidev.entities.Ads;
+import tn.esprit.pidev.entities.AdsView;
+import tn.esprit.pidev.entities.Product;
 import tn.esprit.pidev.repository.IAdsRepository;
 import tn.esprit.pidev.repository.IAdsViewRepository;
 import tn.esprit.pidev.repository.IProductRepository;
@@ -29,15 +33,6 @@ public class AdsService implements IAdsService {
 		adsrepository.save(ads);
 		
 	}
-
-	@Override
-	public void ModAd(int AdsId, Ads ads) {
-		// TODO Auto-generated method stub
-		Ads ad=adsrepository.findById(AdsId).orElse(null);
-		ads = ad;
-		adsrepository.save(ads);
-	}
-
 	@Override
 	public void Mod_SDate(int AdsID, Date new_SDate) {
 		// TODO Auto-generated method stub
@@ -77,22 +72,26 @@ public class AdsService implements IAdsService {
 	}
 
 	@Override
-	public void previousStats(int prodId) {
+	public List<AdsView> previousStats(int prodId) {
+		List list=new ArrayList();
+		Product prod=productrepository.findById(prodId).orElse(null);
+		List<Ads> ads=adsrepository.getAdsByproduct(prod);
 		
-		List<Ads> ads=adsrepository.getAdsByproduct(prodId);
-		ads.forEach(ad ->{
+		for(Ads ad : ads){
 			adsviewrepository.getAdsViewByAds(ad);
-			
-		});
+			list.add(adsviewrepository.getAdsViewByAds(ad));
+		}
+
+		return list;
 			
 	}
 
 	@Override
-	public void ModTargetView_tot(int AdsId, int vCount) {
+	public String ModTargetView_tot(int AdsId, int vCount) {
 		Ads ad=adsrepository.findById(AdsId).orElse(null);
 		ad.setTargetView_tot(vCount);
 		adsrepository.save(ad);
-		
+		return "Success";
 		
 	}
 

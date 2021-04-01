@@ -57,7 +57,7 @@ public class AdsViewService implements IAdsViewService {
 		// TODO Auto-generated method stub
 		Ads ad=adsrepository.findById(AdId).orElse(null);
 		if(ad!=null){
-			AdsView adview=(AdsView) adsviewrepository.getAdsViewByAds(ad);
+			AdsView adview=adsviewrepository.getAdsViewByAds(ad);
 			adview.setTotal_Num(adview.getTotal_Num()+1);
 			if(adview!=null){	
 				User user=userrepository.findById(userId).orElse(null);
@@ -77,8 +77,10 @@ public class AdsViewService implements IAdsViewService {
 	
 	@Scheduled(cron="0 0 * * * ?")
 	@Override
-	public void finalStats(int AdsId) {	
-		Ads ad=adsrepository.findById(AdsId).orElse(null);
+	public ArrayList finalStats() {	
+		ArrayList eval=new ArrayList();
+		List<Ads> ads=(List<Ads>) adsrepository.findAll();
+		for(Ads ad : ads){
 		if(ad.getFinishDate()==new Date()){
 		AdsView adview=(AdsView) adsviewrepository.getAdsViewByAds(ad);
 		if((ad!=null)&&(adview !=null)){
@@ -87,7 +89,7 @@ public class AdsViewService implements IAdsViewService {
 			float real= adview.getTotal_Num();
 			List<Integer> ages=adview.getAge();
 			double avg=ages.stream().mapToInt(val -> val).average().orElse(0.0);
-			ArrayList eval=new ArrayList();
+			
 			eval.add(tar);
 			eval.add(real);
 			eval.add(avg);
@@ -100,5 +102,14 @@ public class AdsViewService implements IAdsViewService {
 			}
 		}
 		}
+		};
+		return eval;
+	}
+
+	@Override
+	public void AffectAdsviewtoAds(int AdId,AdsView adsview) {
+		Ads ad=adsrepository.findById(AdId).orElse(null);
+		adsview.setAds(ad);
+		adsviewrepository.save(adsview);		
 	}
 	}

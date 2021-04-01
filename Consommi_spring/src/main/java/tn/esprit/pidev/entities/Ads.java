@@ -64,13 +64,13 @@ public class Ads implements Serializable {
 		return startDate;
 	}
 	public void setStartDate(Date startDate) {
-		startDate = startDate;
+		this.startDate = startDate;
 	}
 	public Date getFinishDate() {
 		return finishDate;
 	}
 	public void setFinishDate(Date finishDate) {
-		finishDate = finishDate;
+		this.finishDate = finishDate;
 	}
 	public String getTarget() {
 		return Target;
@@ -84,6 +84,14 @@ public class Ads implements Serializable {
 	public void setTargetView_tot(int targetView_tot) {
 		TargetView_tot = targetView_tot;
 	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	
 	
 	
 	

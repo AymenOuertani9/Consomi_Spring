@@ -1,5 +1,6 @@
 package tn.esprit.pidev.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.pidev.entities.Ads;
+import tn.esprit.pidev.entities.Product;
 import tn.esprit.pidev.entities.Stock;
 import tn.esprit.pidev.service.StockService;
 
@@ -21,19 +23,19 @@ public class StockRestController {
 	@Autowired
 	StockService stockservice;
 	
-	@PutMapping("/AddQStock/{prodId}/{Quan}")
+	@PutMapping("AddQStock/{prodId}")
 	@ResponseBody
-	public void AddQStock(@PathVariable("prodId")int prodID, @PathVariable("Quan") float quan){
+	public Stock AddQStock(@PathVariable("prodId")int prodID, @RequestBody float quan){
 		
-		stockservice.AddQStock(prodID, quan);
+		return stockservice.AddQStock(prodID, quan);
 	}
 	
 	
 	@PutMapping("/CommandeStock/{prodId}/{quan}")
 	@ResponseBody
-	public void CommandeStock(@PathVariable("prodId")int prodID, @PathVariable("quan")float quan){
+	public String CommandeStock(@PathVariable("prodId")int prodID, @PathVariable("quan")float quan){
 		
-		stockservice.CommandeStock(prodID, quan);
+		return stockservice.CommandeStock(prodID, quan);
 		
 	}
 	
@@ -60,6 +62,17 @@ public class StockRestController {
 		List<Stock> list =stockservice.getStockbyQuantity(quan);
 		return list;
 	} 
+	@GetMapping("DailyStock")
+	@ResponseBody
+	public ArrayList<String> DailyStock() {
+		return stockservice.DailyStock();
+	}
+	
+	@GetMapping("ExpirationsNotif")
+	@ResponseBody
+	public List<Product> ExpirationsNotif() {
+		return stockservice.ExpirationsNotif();
+	}
 	
 
 

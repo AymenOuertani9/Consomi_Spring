@@ -28,10 +28,10 @@ public class SupplierRestController {
 		return (List<supplier>) supplierservice.getAllSuppliers();
 	}
 	
-	@GetMapping("/Supplier/{pName}")
+	@GetMapping("/Supplier")
 	@ResponseBody
-	public void getSupplierByProduct(@PathVariable("pName") String pName){
-		supplierservice.getSupplierByProduct(pName);
+	public List<supplier> getSupplierByProduct(@RequestBody String pName){
+		return supplierservice.getSupplierByProduct(pName);
 	}
 	
 	@PostMapping("/AddSupplier")
@@ -43,7 +43,7 @@ public class SupplierRestController {
 	
 	@PutMapping("/ModSupplier/{IdSupp}/{Supp}")
 	@ResponseBody
-	public void ModSupplier(@PathVariable("IdSupp")int SuppId,@PathVariable("Supp") supplier supplier){
+	public void ModSupplier(@PathVariable("IdSupp")int SuppId,@RequestBody supplier supplier){
 		
 		supplierservice.Mod_Supplier(SuppId, supplier);
 	}

@@ -26,7 +26,6 @@ public class Aisel implements Serializable{
 	private int Capacitymax;
 	@OneToMany(mappedBy = "aisel")
 	private List<Product> products;
-	
 	public int getIdAisel() {
 		return idAisel;
 	}
@@ -57,8 +56,5 @@ public class Aisel implements Serializable{
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	
-	
-	
-	
+
 }

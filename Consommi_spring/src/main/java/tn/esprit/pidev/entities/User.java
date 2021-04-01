@@ -50,8 +50,6 @@ public class User implements Serializable{
 	private List<Claim>claims;
 	@OneToMany(mappedBy = "user")
 	private List<Product>products;
-	@OneToMany(mappedBy = "user")
-	private List<Stock> stocks;
 	@OneToMany(mappedBy="user")
 	private List<Donation> donation;
 	@OneToMany(mappedBy="user")
@@ -141,12 +139,6 @@ public class User implements Serializable{
 	}
 	public void setProducts(List<Product> products) {
 		this.products = products;
-	}
-	public List<Stock> getStocks() {
-		return stocks;
-	}
-	public void setStocks(List<Stock> stocks) {
-		this.stocks = stocks;
 	}
 	public List<Donation> getDonation() {
 		return donation;

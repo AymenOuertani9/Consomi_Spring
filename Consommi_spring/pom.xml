@@ -18,10 +18,7 @@
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+		
 <!-- 		<dependency> -->
 <!-- 			<groupId>org.springframework.boot</groupId> -->
 <!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
@@ -50,6 +47,49 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.social</groupId>
+    		<artifactId>spring-social-core</artifactId>
+    		<version>1.1.1.RELEASE</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.social</groupId>
+    		<artifactId>spring-social-web</artifactId>
+    		<version>1.1.1.RELEASE</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.social</groupId>
+    		<artifactId>spring-social-facebook</artifactId>
+   			<version>1.1.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mllib_2.12</artifactId>
+			<version>3.0.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Spark NLP -->
+		<dependency>
+			<groupId>com.johnsnowlabs.nlp</groupId>
+			<artifactId>spark-nlp_2.12</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<!-- Logging  -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
 			<scope>test</scope>
 		</dependency>
 <!-- 		<dependency> -->

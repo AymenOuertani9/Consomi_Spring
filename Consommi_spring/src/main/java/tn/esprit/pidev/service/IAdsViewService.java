@@ -1,5 +1,6 @@
 package tn.esprit.pidev.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tn.esprit.pidev.entities.AdsView;
@@ -11,6 +12,6 @@ public interface IAdsViewService {
 	List<AdsView> getAllAdsView();
 	void AdsViewToday();
 	void Addview(int AdId, int userId);
-	void finalStats(int AdsId);
-	
+	ArrayList finalStats();
+	void AffectAdsviewtoAds(int AdId,AdsView adsview);
 }

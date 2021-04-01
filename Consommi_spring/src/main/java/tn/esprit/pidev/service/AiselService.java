@@ -26,10 +26,10 @@ public class AiselService implements IAiselService {
 	
 
 	@Override
-	public int AddAisel(Aisel aisel) {
+	public Aisel AddAisel(Aisel aisel) {
 		// TODO Auto-generated method stub
 		aiselrepository.save(aisel);
-		return aisel.getIdAisel();
+		return aisel;
 		
 	}
 
@@ -58,12 +58,14 @@ public class AiselService implements IAiselService {
 	}
 
 	@Override
-	public void AffectProdctToAisel(String CatName,int aiselId) {
+	public String AffectProdctToAisel(int cate,int aiselId) {
 		
-		Category cat=categoryrepository.findCategoryByname(CatName);
+		Category cat=categoryrepository.findById(cate).orElse(null);
 		List<Product> prod=productrepository.findBycategory(cat);
 		Aisel aisel=aiselrepository.findById(aiselId).orElse(null); 
 		aisel.setProducts(prod);
+		aiselrepository.save(aisel);
+		return "Added";
 		
 	}
 
@@ -77,25 +79,23 @@ public class AiselService implements IAiselService {
 			return "This Aisel is Full if you want delete one product";
 			
 		}else {
-			aisel.getProducts().set(aisel.getProducts().size()+1, prod);
+			prod.setAisel(aisel);
+			//aisel.getProducts().set(aisel.getProducts().size()+1, prod);
+			//List<Product> list=aisel.getProducts();
+			//list.add(prod);
+			//aisel.setProducts(list);
+			//aiselrepository.save(aisel);
+			productrepository.save(prod);
 			return "the Product has been succefully added to the aisel";
 		}
-		
-		
-		
+
 	}
 
 	@Override
-	public String DeleteSpecificProduct(int aiselId, int prodId) {
-		Aisel aisel=aiselrepository.findById(aiselId).orElse(null); 
+	public String DeleteSpecificProduct(int prodId) {
 		Product prod=productrepository.findById(prodId).orElse(null);
-		List<Product> products=aisel.getProducts();
-		products.forEach(product->{
-		 if(prod.getIdProduct()==prodId){
-			 aisel.getProducts().remove(prod); 
-		 }
-		}
-		);
+		prod.setAisel(null);
+		productrepository.save(prod);
 		return "The Product has been Deleted Succefully";
 		
 	}

@@ -11,6 +11,6 @@ import tn.esprit.pidev.entities.AdsView;
 @Repository
 public interface IAdsViewRepository extends CrudRepository<AdsView,Integer> {
 	
-	List<AdsView> getAdsViewByAds(Ads ads);
+	AdsView getAdsViewByAds(Ads ads);
 
 }

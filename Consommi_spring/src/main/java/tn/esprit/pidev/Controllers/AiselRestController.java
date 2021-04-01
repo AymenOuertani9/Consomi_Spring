@@ -24,14 +24,14 @@ public class AiselRestController {
 
 	@PostMapping("/AddAisel")
 	@ResponseBody
-	public void AddAisel(@RequestBody Aisel aisel){
+	public Aisel AddAisel(@RequestBody Aisel aisel){
 		
-		aiselservice.AddAisel(aisel);
+		return aiselservice.AddAisel(aisel);
 	}
 	
-	@PutMapping("/ModAisel/{aiselId}/{aisel}")
+	@PutMapping("/ModAisel/{aiselId}")
 	@ResponseBody
-	public void Mod_Aisel(@PathVariable("aiselId")int aiselId,@PathVariable("aisel") Aisel aisel){
+	public void Mod_Aisel(@PathVariable("aiselId")int aiselId,@RequestBody Aisel aisel){
 		
 		aiselservice.Mod_Aisel(aiselId, aisel);
 	}
@@ -49,5 +49,27 @@ public class AiselRestController {
 	public List<Aisel> getAds(){
 		List<Aisel> list = aiselservice.GetAllAisel();
 		return list;
+	}
+	
+	@PutMapping("/ProdToaisel/{cat}/{aiselId}")
+	@ResponseBody
+	public String AffectProdctToAisel(@PathVariable("cat")int Cate,@PathVariable("aiselId")int aiselId) {
+		
+		return aiselservice.AffectProdctToAisel(Cate, aiselId);
+		
+	}
+	
+	@PutMapping("/SpecProdToaisel/{aiselId}/{prodId}")
+	@ResponseBody
+	public String AffecterSpecificProduct(@PathVariable("aiselId")int aiselId, @PathVariable("prodId")int prodId) {
+		
+		return aiselservice.AffecterSpecificProduct(aiselId, prodId);
+		
+	}
+	
+	@DeleteMapping("/SpecProdToaisel/{prodId}")
+	@ResponseBody
+	public String DeleteSpecificProduct(@PathVariable("prodId") int prodId) {
+		return aiselservice.DeleteSpecificProduct(prodId);		
 	}
 }

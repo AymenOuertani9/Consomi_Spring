@@ -11,7 +11,7 @@ import tn.esprit.pidev.entities.Stock;
 @Repository
 public interface IStockRepository extends CrudRepository<Stock, Integer> {
 	
-	Stock findByproducts(Product product);
+	Stock findByproduct(Product product);
 	List<Stock> findByQuantity(float quan);
 
 }
