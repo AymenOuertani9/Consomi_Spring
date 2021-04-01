@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,12 +27,15 @@ public class Ads implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
 	private String MediaType;
-	private Byte Madia;
+	private String Madia;
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	@Temporal(TemporalType.DATE)
 	private Date finishDate;
 	private String Target;
+	private int TargetView_tot;
+	@ManyToOne
+	private Product product;
 	public int getIdAds() {
 		return idAds;
 	}
@@ -50,23 +54,23 @@ public class Ads implements Serializable {
 	public void setMediaType(String mediaType) {
 		MediaType = mediaType;
 	}
-	public Byte getMadia() {
+	public String getMadia() {
 		return Madia;
 	}
-	public void setMadia(Byte madia) {
+	public void setMadia(String madia) {
 		Madia = madia;
 	}
 	public Date getStartDate() {
 		return startDate;
 	}
 	public void setStartDate(Date startDate) {
-		startDate = startDate;
+		this.startDate = startDate;
 	}
 	public Date getFinishDate() {
 		return finishDate;
 	}
 	public void setFinishDate(Date finishDate) {
-		finishDate = finishDate;
+		this.finishDate = finishDate;
 	}
 	public String getTarget() {
 		return Target;
@@ -74,6 +78,22 @@ public class Ads implements Serializable {
 	public void setTarget(String target) {
 		Target = target;
 	}
+	public int getTargetView_tot() {
+		return TargetView_tot;
+	}
+	public void setTargetView_tot(int targetView_tot) {
+		TargetView_tot = targetView_tot;
+	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	
+	
+	
 	
 	
 	

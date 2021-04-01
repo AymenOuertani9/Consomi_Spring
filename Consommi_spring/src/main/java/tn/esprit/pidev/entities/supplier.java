@@ -49,7 +49,7 @@ public class supplier implements Serializable{
 		return product;
 	}
 	public void setProduct(String product) {
-		product = product;
+		this.product = product;
 	}
 	public float getCoast() {
 		return coast;
@@ -58,6 +58,4 @@ public class supplier implements Serializable{
 		this.coast = coast;
 	}
 	
-	
-
 }

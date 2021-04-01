@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,10 +52,10 @@ public class Product implements Serializable{
 	private List<CommandProduct> commandproducts;
 	@ManyToOne
 	private Aisel aisel;
-	@ManyToMany(mappedBy = "products")
+	@OneToMany(mappedBy = "products")
 	private List<Cart>carts;
-	@ManyToMany(mappedBy = "products")
-	private List<Stock>stocks;
+	@OneToOne
+	private Stock stock;
 	
 	
 	public Product(int idProduct, String productName, String picture, String description, float buyPrice,
@@ -77,9 +80,8 @@ public class Product implements Serializable{
 		this.promotions = promotions;
 		this.category = category;
 		this.commandproducts = commandproducts;
-		this.aisel = aisel;
 		this.carts = carts;
-		this.stocks = stocks;
+		this.stock = stock;
 	}
 	
 	public Product(String productName, String picture, String description, float buyPrice, float sellPrice,
@@ -103,9 +105,8 @@ public class Product implements Serializable{
 		this.promotions = promotions;
 		this.category = category;
 		this.commandproducts = commandproducts;
-		this.aisel = aisel;
 		this.carts = carts;
-		this.stocks = stocks;
+		this.stock = stock;
 	}
 
 	public Product() {
@@ -119,7 +120,7 @@ public class Product implements Serializable{
 				+ ", newProduct=" + newProduct + ", barCode=" + barCode + ", createdAt=" + createdAt + ", mostViewed="
 				+ mostViewed + ", tva=" + tva + ", weigth=" + weigth + ", quantity=" + quantity + ", user=" + user
 				+ ", promotions=" + promotions + ", category=" + category + ", commandproducts=" + commandproducts
-				+ ", radius=" + aisel + ", carts=" + carts + ", stocks=" + stocks + "]";
+				+ ", carts=" + carts + ", stocks=" + stock + "]";
 	}
 
 	public int getIdProduct() {
@@ -241,7 +242,8 @@ public class Product implements Serializable{
 	public void setPromotions(List<Promotion> promotions) {
 		this.promotions = promotions;
 	}
-
+	
+	@JsonManagedReference
 	public Category getCategory() {
 		return category;
 	}
@@ -258,6 +260,17 @@ public class Product implements Serializable{
 		this.commandproducts = commandproducts;
 	}
 
+	public List<Cart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(List<Cart> carts) {
+		this.carts = carts;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public Aisel getAisel() {
 		return aisel;
 	}
@@ -266,25 +279,16 @@ public class Product implements Serializable{
 		this.aisel = aisel;
 	}
 
-	public List<Cart> getCarts() {
-		return carts;
+	public Stock getStock() {
+		return stock;
 	}
 
-	public void setCarts(List<Cart> carts) {
-		this.carts = carts;
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
-
-	public List<Stock> getStocks() {
-		return stocks;
-	}
-
-	public void setStocks(List<Stock> stocks) {
-		this.stocks = stocks;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
+	
+	
 	
 	
 	
