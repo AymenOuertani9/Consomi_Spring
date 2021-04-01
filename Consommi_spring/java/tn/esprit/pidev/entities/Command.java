@@ -2,6 +2,7 @@ package tn.esprit.pidev.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,9 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,13 +31,19 @@ public class Command implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idcommand;
+	@Transient
 	private double AmountCommand;
 	
 	@Temporal(TemporalType.DATE)
+
+@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date DateCreation;
 	@Temporal(TemporalType.DATE)
+
+@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date DateSend;
-	private String Etat;
+	@Enumerated(EnumType.STRING)
+	private  Etat etat;
 	private int numcommand;
 	private int tva;
 	@Enumerated(EnumType.STRING)
@@ -46,8 +59,9 @@ public class Command implements Serializable{
 	private User user;
 @OneToOne(mappedBy = "commande")
 	private Delivery delivery;
-
-public Command(double amountCommand, Date dateCommand, Date dateCreation, Date dateSend, int numsend, int numcommand,
+@OneToMany(mappedBy = "comande")
+private List<Remarque>remarques;
+public Command(double amountCommand, Date dateCreation, Date dateSend,  int numcommand,
 		int tva, ModePayement payement) {
 	super();
 	AmountCommand = amountCommand;
@@ -74,6 +88,13 @@ public void setIdcommand(int idcommand) {
 }
 
 public double getAmountCommand() {
+	/*if(!cart.getLignescmd().isEmpty()) {
+		for(LigneComand lc:cart.getLignescmd()) {
+		double totalligne=cart.getTotal()+tva+delivery.getFraislivraison();
+		AmountCommand=AmountCommand+totalligne;
+		}
+		
+	}*/
 	return AmountCommand;
 }
 
@@ -97,12 +118,14 @@ public void setDateSend(Date dateSend) {
 	DateSend = dateSend;
 }
 
-public String getEtat() {
-	return Etat;
+
+
+public Etat getEtat() {
+	return etat;
 }
 
-public void setEtat(String etat) {
-	Etat = etat;
+public void setEtat(Etat etat) {
+	this.etat = etat;
 }
 
 public int getNumcommand() {
@@ -175,6 +198,14 @@ public Delivery getDelivery() {
 
 public void setDelivery(Delivery delivery) {
 	this.delivery = delivery;
+}
+
+public List<Remarque> getRemarques() {
+	return remarques;
+}
+
+public void setRemarques(List<Remarque> remarques) {
+	this.remarques = remarques;
 }
 
 	

@@ -61,4 +61,16 @@ public int addOrUpdateBill(@RequestBody Bill bill) {
 public void ajouteretaffecterUserABill(@RequestBody Bill bill,@PathVariable("iduser") int userId) {
 	facserv.ajouteretaffecterUserABill(bill, userId);
 }
+
+//URL : http://localhost:8081/SpringMVC/servlet/find/{num}
+@GetMapping(value = "/find/{num}")
+public Bill find(@PathVariable("num") int numero) {
+	return facserv.find(numero);
+}
+
+//URL : http://localhost:8081/SpringMVC/servlet/prixAchatsProduits
+@GetMapping(value = "/prixAchatsProduits")
+public Double prixAchatsProduits() {
+	return facserv.prixAchatsProduits();
+}
 }

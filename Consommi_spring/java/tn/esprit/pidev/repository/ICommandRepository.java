@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import tn.esprit.pidev.entities.Command;
 import tn.esprit.pidev.entities.ModePayement;
+import tn.esprit.pidev.entities.Product;
 @Repository
 public interface ICommandRepository extends JpaRepository<Command, Integer>{
 	/*@Query("select c from Commande c where c.numcommand=:num and c.Etat=:valide and c.DateSend=:datesend and c.DateCreation=:datecree and c.AmountCommand=:amount and c.payement=:enligne and c.validpayement=:v")
@@ -27,5 +28,11 @@ public interface ICommandRepository extends JpaRepository<Command, Integer>{
 		    + "join c.user u "
 			+ "where u.iduser=:userid")
 public List<Command >getAllCommandByUser(@Param("userid")int userId);
-
+	@Query("select c FROM Command c ORDER BY c.DateSend DESC")
+	public List<Command> selectAll();
+	@Query("select count(p) from Command p where p.DateSend between :d1 and :d2")
+	public Integer countBetween(@Param("d1")Date d1, @Param("d2")Date d2);
+	@Query("select c FROM Command c ORDER BY c.DateCreation DESC")
+	public List<Command> findByOrderByOrderDatecreationDesc() ;
+	
 }

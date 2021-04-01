@@ -17,4 +17,10 @@ public interface IBillRepository extends JpaRepository<Bill, Integer>{
 			+ "join c.user u "
 			+ "where u.iduser=:userId")
 	public List<Bill> getbillByIduser(@Param("userId")int userId);
+	@Query("select p from Bill p where p.numBill=:num")
+	public Bill find(@Param("num")int numero);
+	@Query("select coalesce(sum(p.totalfinal),0) from Bill p where p.user=null ")
+	public Double prixAchatsProduits();
+
+	
 }

@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 
 
 import tn.esprit.pidev.entities.Cart;
-
+import tn.esprit.pidev.entities.LigneComand;
 import tn.esprit.pidev.entities.Product;
 import tn.esprit.pidev.entities.User;
 import tn.esprit.pidev.repository.ICartRepository;
-
+import tn.esprit.pidev.repository.ILigneCommandeRepository;
 import tn.esprit.pidev.repository.IProductRepository;
 import tn.esprit.pidev.repository.IUserRepository;
 
@@ -30,7 +30,8 @@ ICartRepository cartrep;
 IProductRepository produitrep;
 @Autowired
 IUserRepository userep;
-
+@Autowired
+ILigneCommandeRepository lcrep;
 	@Override
 	public List<Cart>getcartByIduser(int iduser) {
 		
@@ -41,7 +42,7 @@ IUserRepository userep;
 		
 		return cartrep.findById(cartId).orElse(null);
 	}
-	@Transactional
+/*	@Transactional
 	public void affecterProductACart(int productId, int cartId) {
 		Product produit =produitrep.findById(productId).get();
 		Cart cart=cartrep.findById(cartId).get();
@@ -70,63 +71,42 @@ IUserRepository userep;
 				break;
 			}
 		}
-	}
-	@Override
+	}*/
+	/*@Override
 	public Cart enregistrerCart(Cart cart) {
 		
 		return cartrep.save(cart);
-	}
+	}*/
 	@Override
-	public double getCartTotalById(int cartId,int productId ) {
-		Product produit =produitrep.findById(productId).get();
-			Cart cart = cartrep.findById(cartId).get();
-			double Total=produit.getSellPrice()*cart.getQte();
-			System.out.println("your total :"+Total+""+cart.getCurrency());
-			return Total;
-		
-		
-	}
-	@Override
-	public void viderpanier(int cartId) {
+	public double getCartTotalById(int lcId,int cartId ) {
+		LigneComand lc = lcrep.findById(lcId).get();
 		Cart cart=cartrep.findById(cartId).get();
-		List<Product> produits = new ArrayList<>();
-		produits.addAll( cart.getProducts());	
-		for(Product p : produits) {
-			produitrep.delete(p);
-		}
 		
-	}
+			double totalligne=lc.getQte()*(lc.getPrice());	
+			double total=cart.getTotal();
+		total=+totalligne;
+		
+	
+		return total;}
+	
+	
 	@Override
 	public List<String> getAllCartProductsnames(int cartId) {
-		Cart cart=cartrep.findById(cartId).get();
-		List<Product> produits = new ArrayList<>();
-		produits.addAll( cart.getProducts());
-		List<String> names = new ArrayList<>();
-		for(Product p : produits) {
-			names.add(p.getProductName());
-		}
-		return names;
+		return null;
 	}
 	@Override
 	public void mettreAjourProductByCartId(String name, int cartId,int productid) {
-		Cart cart=cartrep.findById(cartId).get();
-		Product p = produitrep.findById(productid).get();
-		List<Product> produits = new ArrayList<>();
-		produits.addAll( cart.getProducts());
 		
-		for(Product pe : produits) {
-			p.setProductName(name);
-			produitrep.save(p);
 		}
 		
 	
-	}
+	
 	@Override
 	public int addOrUpdateCart(Cart cart) {
 		cartrep.save(cart);
 		return cart.getIdcart();
 	}
-	@Transactional
+/*	@Transactional
 	public void affecterCartAUser(int userId, int cartId) {
 		User user =userep.findById(userId).get();
 		Cart cart=cartrep.findById(cartId).get();
@@ -143,14 +123,11 @@ IUserRepository userep;
 		 
 		cartrep.save(cart); 
 
-		
-	}
+		*/
+	
 	@Override
 	public List<Product> getAllCartProducts(int cartId) {
-		Cart cart=cartrep.findById(cartId).get();
-		List<Product> produits = new ArrayList<>();
-		produits.addAll( cart.getProducts());
-		return produits;
+	return null;	
 	}
 	@Override
 	public void deleteCartById(int cartId) {
@@ -159,17 +136,7 @@ IUserRepository userep;
 
 		
 	}
-	@Transactional
-	public void ajouteretaffecterProductACart(Cart cart, int productId) {
-		
-		
-		Product produit =produitrep.findById(productId).get();
-		List<Product> produits = new ArrayList<>();
-		produits.add(produit);
-		cart.setProducts(produits);
-		cartrep.save(cart);
-		
-	}
+	
 	@Transactional
 	public void ajouteretaffecterUserACart(Cart cart, int userId) {
 		User user =userep.findById(userId).get();
@@ -179,8 +146,8 @@ IUserRepository userep;
 		
 		
 	}
-	@Override
-	public void addItem(Product p) {
+	/*@Override
+	public void addItem(Product p) {*/
 		
 		// int qte=0;
 		 /*
@@ -211,20 +178,32 @@ IUserRepository userep;
 			//lc.setQte(lc.getQte()+qte);
 		}
 		produitrep.save(p);*/
-	}
-	/*@Override
+//	}
+
+	@Override
 	public Cart fndByUserAndProduct(User user, Product p) {
 		
-		return cartrep.fndByUserAndProduct(user, p);
+		return null;
+				//cartrep.findByUserAndProduct(user, p);
+	}
+	@Override
+	public Cart enregistrerCart(Cart cart) {
+		
+		return cartrep.save(cart);
+	}
+	@Override
+	public List<Cart> listcartitems(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	}
 	
-	*/
-	@Override
+	/*@Override
 	public List<Cart> listcartitems(User user) {
 		
 		return null;
 	}
-	@Override
+	/*@Override
 	public Integer addProduct(Integer idProduct,Integer qte,Integer iduser) {
 		
 		User user = userep.findById(iduser).get();
@@ -257,6 +236,6 @@ IUserRepository userep;
 		return subtotal;
 	}*/
 	
-	}
+	
 
 

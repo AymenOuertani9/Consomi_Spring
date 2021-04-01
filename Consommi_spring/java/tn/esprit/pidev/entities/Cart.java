@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,20 +25,17 @@ public class Cart implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idcart;
-	@Temporal(TemporalType.DATE)
-	private Date date;
+	
 	private double total;
-	private int qte;
+	
 	private String currency;
-	@ManyToMany
-	private List<Product> products;
-
+	
 	@ManyToOne
 	private User user;
 	@OneToOne(mappedBy = "cart")
 	private Command command;
-	/*@OneToMany(mappedBy = "cart")
-	private List<LigneComand>lignescmd;*/
+	@OneToMany(mappedBy = "cart")
+	private List<LigneComand>lignescmd;
 	public int getIdcart() {
 		return idcart;
 	}
@@ -45,8 +43,15 @@ public class Cart implements Serializable{
 		this.idcart = idcart;
 	}
 	public double getTotal() {
-		return total;
+		if(lignescmd.isEmpty()) {
+			for(LigneComand lc:lignescmd) {
+			double totalligne=lc.getQte()*(lc.getPrice());	
+			total=total+totalligne;
+			}
+		
 	}
+		return total;
+		}
 	public void setTotal(double total) {
 		this.total = total;
 	}
@@ -70,55 +75,41 @@ public class Cart implements Serializable{
 		this.command = command;
 	}
 
-	public int getQte() {
-		return qte;
-	}
-	public void setQte(int qte) {
-		this.qte = qte;
-	}
+	
 
 	public Cart() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Cart(int idcart, double total, int qte, String currency,User user, Command command) {
+	public Cart(int idcart, double total, String currency,User user, Command command) {
 		super();
 		this.idcart = idcart;
 		this.total = total;
-		this.qte = qte;
+		
 		this.currency = currency;
 
 		this.user = user;
 		this.command = command;
 	}
-	public Cart(double total, int qte, String currency, User user, Command command) {
+	public Cart(double total, String currency, User user, Command command) {
 		super();
 		this.total = total;
-		this.qte = qte;
+		
 		this.currency = currency;
 
 		this.user = user;
 		this.command = command;
 	}
-	public Cart(int qte,User user) {
-		super();
-		this.qte = qte;
-
-		this.user = user;
+	public List<LigneComand> getLignescmd() {
+		return lignescmd;
 	}
-	public List<Product> getProducts() {
-		return products;
+	public void setLignescmd(List<LigneComand> lignescmd) {
+		this.lignescmd = lignescmd;
 	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	
+	
+	}	
 	
 
 
-}
+

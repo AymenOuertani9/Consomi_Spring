@@ -38,8 +38,8 @@ public class Product implements Serializable{
 	private int mostViewed;
 	private int tva;
 	private int weigth;
-	/*@OneToMany(mappedBy = "produit")
-private List<LigneComand>lignescmd;*/
+	@OneToMany(mappedBy = "produit")
+private List<LigneComand>lignescmd;
 	
 	@OneToMany(mappedBy = "product")
 	private List<Promotion>promotions;
@@ -49,8 +49,7 @@ private List<LigneComand>lignescmd;*/
 	private List<CommandProduct> commandproducts;
 	@ManyToOne
 	private Radius radius;
-	@ManyToMany(mappedBy = "products")
-	private List<Cart>carts;
+	
 	@ManyToMany(mappedBy = "products")
 	private List<Stock>stocks;
 	
@@ -58,7 +57,7 @@ private List<LigneComand>lignescmd;*/
 	public Product(int idProduct, String productName, String picture, String description, float buyPrice,
 			float sellPrice, boolean newProduct, String barCode, Date createdAt, int mostViewed, int tva, int weigth,
 			int quantity, User user, List<Promotion> promotions, Category category,
-			List<CommandProduct> commandproducts, Radius radius, List<Cart> carts, List<Stock> stocks) {
+			List<CommandProduct> commandproducts, Radius radius, List<Stock> stocks) {
 		super();
 		this.idProduct = idProduct;
 		this.productName = productName;
@@ -78,14 +77,14 @@ private List<LigneComand>lignescmd;*/
 		this.category = category;
 		this.commandproducts = commandproducts;
 		this.radius = radius;
-		this.carts = carts;
+		
 		this.stocks = stocks;
 	}
 	
 	public Product(String productName, String picture, String description, float buyPrice, float sellPrice,
 			boolean newProduct, String barCode, Date createdAt, int mostViewed, int tva, int weigth, int nbrPoints,
 			User user, List<Promotion> promotions, Category category, List<CommandProduct> commandproducts,
-			Radius radius, List<Cart> carts, List<Stock> stocks) {
+			Radius radius, List<Stock> stocks) {
 		super();
 		this.productName = productName;
 		this.picture = picture;
@@ -104,7 +103,7 @@ private List<LigneComand>lignescmd;*/
 		this.category = category;
 		this.commandproducts = commandproducts;
 		this.radius = radius;
-		this.carts = carts;
+		
 		this.stocks = stocks;
 	}
 
@@ -119,7 +118,7 @@ private List<LigneComand>lignescmd;*/
 				+ ", newProduct=" + newProduct + ", barCode=" + barCode + ", createdAt=" + createdAt + ", mostViewed="
 				+ mostViewed + ", tva=" + tva + ", weigth=" + weigth  
 				+ ", promotions=" + promotions + ", category=" + category + ", commandproducts=" + commandproducts
-				+ ", radius=" + radius + ", carts=" + carts + ", stocks=" + stocks + "]";
+				+ ", radius=" + radius +  ", stocks=" + stocks + "]";
 	}
 
 	public int getIdProduct() {
@@ -252,13 +251,7 @@ private List<LigneComand>lignescmd;*/
 		this.radius = radius;
 	}
 
-	public List<Cart> getCarts() {
-		return carts;
-	}
-
-	public void setCarts(List<Cart> carts) {
-		this.carts = carts;
-	}
+	
 
 	public List<Stock> getStocks() {
 		return stocks;
@@ -269,7 +262,15 @@ private List<LigneComand>lignescmd;*/
 	}
 
 	
+	public List<LigneComand> getLignescmd() {
+		return lignescmd;
+	}
 
+	public void setLignescmd(List<LigneComand> lignescmd) {
+		this.lignescmd = lignescmd;
+	}
+
+	
 	
 	
 	

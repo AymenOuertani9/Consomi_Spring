@@ -28,7 +28,7 @@ public class RestControlCart {
 	ICartService cartsev;
 	@Autowired
 	IUserService userserv;
-	
+/*	
 	// URL : http://localhost:8081/SpringMVC/servlet/getcartByIduser/{id}
     @GetMapping(value = "/getcartByIduser/{id}")
     
@@ -54,12 +54,14 @@ public class RestControlCart {
 	 	public Cart enregistrerCart(@RequestBody Cart cart) {
  		cartsev.enregistrerCart(cart);
  		return cart;
+ 	}*/
+ 	
+ // URL : http://localhost:8081/SpringMVC/servlet/getCartTotalById/{idlc}/{idcart}
+    @GetMapping(value = "/getCartTotalById/{idlc}/{idcart}")
+    public double getCartTotalById(@PathVariable("idlc") int lcId,@PathVariable("idcart") int cartId )  {
+ 		return cartsev.getCartTotalById(lcId ,cartId );
  	}
- // URL : http://localhost:8081/SpringMVC/servlet/getCartTotalById/{idcart}
-    @GetMapping(value = "/getCartTotalById/{idcart}/{idprod}")
-    public double getCartTotalById(@PathVariable("idcart")int cartId ,@PathVariable("idprod")int productId ) {
- 		return cartsev.getCartTotalById(cartId ,productId);
- 	}
+	/*
     // URL : http://localhost:8081/SpringMVC/servlet/deleteCartById/1
     @DeleteMapping("/deleteCartById/{idcart}") 
     public void deleteCartById(@PathVariable("idcart")int cartId) {
@@ -114,7 +116,7 @@ public class RestControlCart {
   	  public void addItem(@RequestBody Product p) {
   		  cartsev.addItem(p);
   	  }
-  	  	
+  	 /* 	
   	// http://localhost:8081/SpringMVC/servlet/addProduct/{idprod}/{qte}/{idu}
   	  	@PostMapping("/addProduct/{idprod}/{qte}/{idu}")
   	  public Integer addProduct(@PathVariable("idprod") Integer Productid,@PathVariable("qte") Integer quantity,@PathVariable("idu") Integer iduser) {

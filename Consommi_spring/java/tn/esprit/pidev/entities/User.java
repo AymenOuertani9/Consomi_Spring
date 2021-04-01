@@ -36,10 +36,13 @@ public class User implements Serializable{
 	private String password;
 	private int nbrpoint;
 	private int Tel;
+	@OneToMany(mappedBy = "user")
+	private List<Remarque>remarques;
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
 	private String picture;
-	
+	@OneToOne(mappedBy = "user")
+	private LigneComand lc;
 	@ManyToOne
 	private Role role;
 	@OneToOne
@@ -60,11 +63,12 @@ public class User implements Serializable{
 	private List<Commentaire> commentaire;
 	@OneToMany(mappedBy = "user")
 	private List <Rating> rating;
-	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user")
 	private List<Command> command;
 	@OneToOne(mappedBy = "user")
 	private Bill bill;
-	
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+	private List<Compte> comptes;
 	public int getIduser() {
 		return iduser;
 	}
@@ -249,5 +253,24 @@ public class User implements Serializable{
 	public User() {
 		super();
 	}
+	public LigneComand getLc() {
+		return lc;
+	}
+	public void setLc(LigneComand lc) {
+		this.lc = lc;
+	}
+	public List<Remarque> getRemarques() {
+		return remarques;
+	}
+	public void setRemarques(List<Remarque> remarques) {
+		this.remarques = remarques;
+	}
+	public List<Compte> getComptes() {
+		return comptes;
+	}
+	public void setComptes(List<Compte> comptes) {
+		this.comptes = comptes;
+	}
 
 }
+ 

@@ -68,4 +68,16 @@ IUserRepository userep;
 		
 	}
 
+	@Override
+	public Bill find(int numero) {
+		
+		return facrep.find(numero);
+	}
+
+	@Override
+	public Double prixAchatsProduits() {
+		
+		return facrep.prixAchatsProduits();
+	}
+
 }
