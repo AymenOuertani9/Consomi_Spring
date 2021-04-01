@@ -31,7 +31,6 @@ public class Stock implements Serializable{
 	private List<Command> commande;
 	@ManyToOne
 	private Product product;
-	
 	public int getIdstock() {
 		return idstock;
 	}
@@ -48,13 +47,7 @@ public class Stock implements Serializable{
 		return quantity;
 	}
 	public void setQuantity(float quantity) {
-		quantity = quantity;
-	}
-	public List<Command> getCommandes() {
-		return commande;
-	}
-	public void setCommandes(List<Command> commandes) {
-		commande = commandes;
+		this.quantity = quantity;
 	}
 	public List<Command> getCommande() {
 		return commande;
@@ -68,6 +61,7 @@ public class Stock implements Serializable{
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	
 	
 	
 	

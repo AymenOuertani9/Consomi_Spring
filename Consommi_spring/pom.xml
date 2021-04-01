@@ -63,34 +63,20 @@
     		<artifactId>spring-social-web</artifactId>
     		<version>1.1.1.RELEASE</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
 		<dependency>
-    		<groupId>org.springframework.social</groupId>
-    		<artifactId>spring-social-facebook</artifactId>
-   			<version>1.1.1.RELEASE</version>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-mail</artifactId>
+    		<version>2.4.1</version>
+		</dependency>
+		<dependency> 
+    		<groupId>org.springframework.boot</groupId> 
+    		<artifactId>spring-boot-starter-validation</artifactId> 
 		</dependency>
 		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-mllib_2.12</artifactId>
-			<version>3.0.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- Spark NLP -->
-		<dependency>
-			<groupId>com.johnsnowlabs.nlp</groupId>
-			<artifactId>spark-nlp_2.12</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<!-- Logging  -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.2.3</version>
-			<scope>test</scope>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
 		</dependency>
 <!-- 		<dependency> -->
 <!-- 			<groupId>org.springframework.security</groupId> -->

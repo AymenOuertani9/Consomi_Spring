@@ -2,9 +2,6 @@ package tn.esprit.pidev.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONObject;
-
 import tn.esprit.pidev.entities.Product;
 import tn.esprit.pidev.entities.Stock;
 

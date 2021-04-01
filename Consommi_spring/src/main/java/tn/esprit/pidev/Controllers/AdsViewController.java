@@ -30,8 +30,8 @@ public class AdsViewController {
 	}
 	@GetMapping("/AdsViewToday")
 	@ResponseBody
-	public void AdsViewToday() {
-		adsviewservice.AdsViewToday();
+	public List<AdsView> AdsViewToday() {
+		return adsviewservice.AdsViewToday();
 	}
 	
 	@PutMapping("/AdsView/{adId}/{userId}")
