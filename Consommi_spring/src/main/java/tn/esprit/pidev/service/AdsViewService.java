@@ -53,26 +53,28 @@ public class AdsViewService implements IAdsViewService {
 	}
 
 	@Override
-	public void Addview(int AdId, int userId) {
+	public AdsView Addview(int AdId, int userId) {
 		// TODO Auto-generated method stub
+		AdsView adviewn = new AdsView();
 		Ads ad=adsrepository.findById(AdId).orElse(null);
 		if(ad!=null){
-			AdsView adview=adsviewrepository.getAdsViewByAds(ad);
-			adview.setTotal_Num(adview.getTotal_Num()+1);
-			if(adview!=null){	
+			adviewn=adsviewrepository.getAdsViewByAds(ad);
+			adviewn.setTotal_Num(adviewn.getTotal_Num()+1);
+			if(adviewn!=null){	
 				User user=userrepository.findById(userId).orElse(null);
-				List<Integer> ageList=adview.getAge();
+				List<Integer> ageList=adviewn.getAge();
 				ageList.add(user.getAge());;
-				adview.setAge(ageList);
+				adviewn.setAge(ageList);
 				if(user.getGendre()=="homme"){		
-					adview.setTotal_man(adview.getTotal_man()+1);
+					adviewn.setTotal_man(adviewn.getTotal_man()+1);
 					}
 				else{
-					adview.setTotal_man(adview.getTotal_Woman()+1);
+					adviewn.setTotal_man(adviewn.getTotal_Woman()+1);
 					}
 				}
-			adsviewrepository.save(adview);
+			adsviewrepository.save(adviewn);
 			}
+		return adviewn;
 		}
 	
 	@Scheduled(cron="0 0 * * * ?")

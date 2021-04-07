@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class Category implements Serializable{
 	private int idCategory;
 	private String name;
 	@OneToMany(mappedBy = "category")
+	@JsonIgnore
 	private List<Product>products;
 
 	public Category() {

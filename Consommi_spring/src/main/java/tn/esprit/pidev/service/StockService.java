@@ -49,7 +49,7 @@ public class StockService implements IStockService {
 			stockrepository.save(st);
 			return "ok";
 		} else if (qex < quan){
-			return "Cant previde this quantity";
+			return "Cant previde this quantity, there is only "+ st.getQuantity();
 		} else return "Product Solde Out";
 	}
 	@Override
@@ -88,11 +88,10 @@ public class StockService implements IStockService {
 	public List<Product> ExpirationsNotif() {
 		List<Product> productstoCommande=new ArrayList();
 		Iterable<Stock> stocks=stockrepository.findAll();
-		stocks.forEach(stock ->{
-			if(stock.getQuantity()<= 10){
-			productstoCommande.add(stock.getProduct());
+		for(Stock st : stocks)
+			if(st.getQuantity()<= 10){
+			productstoCommande.add(st.getProduct());
 			}
-		});
 		return productstoCommande;
 	}
 	

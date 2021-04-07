@@ -11,7 +11,7 @@ public interface IAdsViewService {
 	int AddAdsView(AdsView adsview);
 	List<AdsView> getAllAdsView();
 	List<AdsView> AdsViewToday();
-	void Addview(int AdId, int userId);
+	AdsView Addview(int AdId, int userId);
 	ArrayList finalStats();
 	void AffectAdsviewtoAds(int AdId,AdsView adsview);
 }

@@ -26,15 +26,7 @@ public class AdsRestController {
 	@Autowired
 	AdsViewService adsviewservice;
 	
-	@PostMapping("/AddAds")
-	@ResponseBody
-	public Ads AddAds(@RequestBody Ads a){
-		adsservice.AddAd(a);
-		AdsView adsview=new AdsView();
-		adsview.setAds(a);
-		adsviewservice.AddAdsView(adsview);
-		return adsview.getAds();
-	}
+
 	@PutMapping("/ModsDate/{AdsId}")
 	@ResponseBody
 	public Date Mod_SDate(@PathVariable("AdsId")int AdsId,@RequestBody Date new_SDate){
@@ -42,6 +34,16 @@ public class AdsRestController {
 		adsservice.Mod_SDate(AdsId, new_SDate);
 		return new_SDate;
 		
+	}
+	
+	@PostMapping("/AddAd")
+	@ResponseBody
+	public Ads AddAd(@RequestBody Ads a){
+		adsservice.AddAd(a);
+		AdsView adsview=new AdsView();
+		adsview.setAds(a);
+		adsviewservice.AddAdsView(adsview);
+		return a;
 	}
 	
 	@PutMapping("/ModfDate/{AdsId}")

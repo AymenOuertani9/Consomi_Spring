@@ -10,7 +10,7 @@ public interface IAiselService {
 	String Mod_Aisel(int aiselId, Aisel aisel);
 	String Del_Aisel(int aiselId);
 	List<Aisel> GetAllAisel();
-	String AffectProdctToAisel(int cat,int aiselId);
+	Aisel AffectProdctToAisel(int cat,int aiselId);
 	String AffecterSpecificProduct(int AiselId,int ProdId);
 	String DeleteSpecificProduct(int ProdId);
 

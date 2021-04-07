@@ -53,7 +53,7 @@ public class AiselRestController {
 	
 	@PutMapping("/ProdToaisel/{cat}/{aiselId}")
 	@ResponseBody
-	public String AffectProdctToAisel(@PathVariable("cat")int Cate,@PathVariable("aiselId")int aiselId) {
+	public Aisel AffectProdctToAisel(@PathVariable("cat")int Cate,@PathVariable("aiselId")int aiselId) {
 		
 		return aiselservice.AffectProdctToAisel(Cate, aiselId);
 		

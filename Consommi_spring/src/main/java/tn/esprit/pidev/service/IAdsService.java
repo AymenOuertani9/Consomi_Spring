@@ -8,7 +8,7 @@ import tn.esprit.pidev.entities.AdsView;
 
 public interface IAdsService {
 	
-	void AddAd(Ads ads);
+	Ads AddAd(Ads ads);
 	void Mod_SDate(int AdsID,Date new_SDate);
 	void Mod_FDate(int AdsId,Date new_FDate);
 	List<Ads> GetAllAds();

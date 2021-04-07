@@ -15,14 +15,21 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
-
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -43,8 +50,10 @@ public class Product implements Serializable{
 	private int quantity;
 
 	@ManyToOne
+
 	private User user;
 	@OneToMany(mappedBy = "product")
+
 	private List<Promotion>promotions;
 	@ManyToOne
 	private Category category;

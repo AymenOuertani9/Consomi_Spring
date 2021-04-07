@@ -58,14 +58,14 @@ public class AiselService implements IAiselService {
 	}
 
 	@Override
-	public String AffectProdctToAisel(int cate,int aiselId) {
+	public Aisel AffectProdctToAisel(int cate,int aiselId) {
 		
 		Category cat=categoryrepository.findById(cate).orElse(null);
 		List<Product> prod=productrepository.findBycategory(cat);
 		Aisel aisel=aiselrepository.findById(aiselId).orElse(null); 
 		aisel.setProducts(prod);
 		aiselrepository.save(aisel);
-		return "Added";
+		return aisel;
 		
 	}
 
@@ -86,7 +86,7 @@ public class AiselService implements IAiselService {
 			aisel.setProducts(list);
 			aiselrepository.save(aisel);
 			productrepository.save(prod);
-			return "the Product has been succefully added to the aisel";
+			return "the Product has been succefully added to"+ aisel.toString();
 		}
 
 	}

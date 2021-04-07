@@ -36,9 +36,10 @@ public class AdsViewController {
 	
 	@PutMapping("/AdsView/{adId}/{userId}")
 	@ResponseBody
-	public void Addview(@PathVariable("adId")int AdId,@PathVariable("userId") int userId) {
+	public AdsView Addview(@PathVariable("adId")int AdId,@PathVariable("userId") int userId) {
 		
-		adsviewservice.Addview(AdId, userId);
+		return adsviewservice.Addview(AdId, userId);
+		 
 	}
 	
 	@GetMapping("/finalStats")

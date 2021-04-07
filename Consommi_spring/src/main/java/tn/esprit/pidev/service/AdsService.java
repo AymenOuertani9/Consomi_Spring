@@ -28,9 +28,10 @@ public class AdsService implements IAdsService {
 	IAdsViewRepository adsviewrepository;
 
 	@Override
-	public void AddAd(Ads ads) {
+
+	public Ads AddAd(Ads ads) {
 		// TODO Auto-generated method stub
-		adsrepository.save(ads);
+		return adsrepository.save(ads);
 		
 	}
 	@Override

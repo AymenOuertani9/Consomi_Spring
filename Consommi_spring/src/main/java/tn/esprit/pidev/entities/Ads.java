@@ -11,14 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Ads implements Serializable {
 	
 	@Id
@@ -35,7 +35,25 @@ public class Ads implements Serializable {
 	private String Target;
 	private int TargetView_tot;
 	@ManyToOne
+	//@JsonIgnore
 	private Product product;
+	
+	public Ads() {
+		super();
+	}
+	public Ads(int idAds, Date dateCreation, String mediaType, String madia, Date startDate, Date finishDate,
+			String target, int targetView_tot, Product product) {
+		super();
+		this.idAds = idAds;
+		DateCreation = dateCreation;
+		MediaType = mediaType;
+		Madia = madia;
+		this.startDate = startDate;
+		this.finishDate = finishDate;
+		Target = target;
+		TargetView_tot = targetView_tot;
+		this.product = product;
+	}
 	public int getIdAds() {
 		return idAds;
 	}
@@ -89,13 +107,6 @@ public class Ads implements Serializable {
 	}
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 }

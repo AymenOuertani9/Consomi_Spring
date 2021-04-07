@@ -64,7 +64,7 @@ public class SupplyingService implements ISupplyingService {
 				}
 			}
 		}
-		return "Added";
+		return "Added ";
 	}
 	@Override
 	public List<supplying> suppThisMonth() {
